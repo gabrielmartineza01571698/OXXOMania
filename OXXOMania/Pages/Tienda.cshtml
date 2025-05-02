@@ -153,6 +153,13 @@
         border-color: #b85628;
         box-shadow: 0 0 5px rgba(184, 86, 40, 0.5);
     }
+
+    .moneda-saldo {
+    width: 50px;
+    height: 50px;
+    image-rendering: pixelated;
+}
+
 </style>
 
 <!-- cuerpo principal de la pagina -->
@@ -173,7 +180,7 @@
 
     <!-- mostrar saldo actual del usuario -->
     <div class="saldo">
-        <img src="/images/coin.png" alt="Moneda" />
+        <img src="/images/coin.png" alt="Moneda" class="moneda-saldo" />
         <span>@Model.Monedas monedas</span>
     </div>
 
