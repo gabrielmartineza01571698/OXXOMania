@@ -76,7 +76,7 @@ body {
   border-radius: 10px;
   margin-bottom: 20px;
   scroll-snap-type: x mandatory;
-  max-width: 30vw; /* Límite al ancho de pantalla */
+  max-width: 50vw; /* Límite al ancho de pantalla */
 }
 
 .objeto-card {
@@ -151,7 +151,12 @@ body {
   position: relative;
   width: 200px;
   height: 300px;
+  background-image: url('/images/objetos/fondo_a.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 
 /* Botones inferiores */
 .acciones-inferiores {
