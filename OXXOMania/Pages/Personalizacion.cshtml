@@ -1,0 +1,115 @@
+@page
+@model OXXOMania.Pages.PersonalizacionModel
+@{
+    ViewData["Title"] = "Personalización de Avatar";
+}
+
+<h2>Personalización de Avatar</h2>
+
+@{
+    var tipos = new[] { "Camisa", "Pantalon", "Cara" };
+}
+
+<section class="personalizacion-seccion">
+
+    <div class="scroll-contenedor">
+        @foreach (var tipo in tipos)
+        {
+            var tipoId = tipo.ToLower(); // e.g. "camisa"
+            <div class="tipo-seccion">
+                <button type="button" class="toggle-btn" data-target="@tipoId">
+                    ▶ @tipo
+                </button>
+
+                <div id="contenedor-@tipoId" class="objetos-scroll tipo-contenedor hidden">
+                    @foreach (var objeto in Model.ObjetosEquipables.Where(o => o.Tipo == tipo))
+                    {
+                        var clase = objeto.Equipado ? "equipado" : "no-equipado";
+                        <div class="objeto-card @clase">
+                            <h4>@objeto.Nombre</h4>
+                            <p>@objeto.Descripcion</p>
+
+                            @if (objeto.Equipado)
+                            {
+                                <span class="text-success"><strong>Equipado</strong></span>
+                            }
+                            else
+                            {
+                                <form method="post">
+                                    <input type="hidden" name="idObjeto" value="@objeto.IdObjeto" />
+                                    <input type="hidden" name="tipo" value="@objeto.Tipo" />
+                                    <button type="submit" class="btn btn-primary btn-sm">Equipar</button>
+                                </form>
+                            }
+                        </div>
+                    }
+
+                    @if (!Model.ObjetosEquipables.Any(o => o.Tipo == tipo))
+                    {
+                        <p>No tienes objetos de este tipo.</p>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="acciones-inferiores">
+        @if (!Model.MostrarTodos)
+        {
+            <a class="boton-accion gris" asp-page="./Personalizacion" asp-route-mostrarTodos="true">Mostrar todos los objetos</a>
+        }
+        else
+        {
+            <a class="boton-accion gris" asp-page="./Personalizacion" asp-route-mostrarTodos="false">Ver solo equipados</a>
+        }
+
+        <a class="boton-accion verde" asp-page="/Tienda">Ir a la tienda</a>
+    </div>
+</section>
+
+<!-- Avatar compuesto superpuesto a la derecha -->
+<div class="avatar-preview">
+    <div class="avatar-box">
+        @foreach (var tipo in new[] { "Cara", "Camisa", "Pantalon" })
+        {
+            var objeto = Model.ObjetosEquipables.FirstOrDefault(o => o.Tipo == tipo && o.Equipado);
+            if (objeto != null)
+            {
+                <img src="@Url.Content("~/images/objetos/" + objeto.Imagen)" alt="@objeto.Nombre"
+                     style="
+                         position: absolute; 
+                         width: 100%; 
+                         height: 100%; 
+                         object-fit: contain; 
+                         z-index: 
+                             @(tipo == "Cara" ? 3 : tipo == "Camisa" ? 2 : 1); 
+                         top: 
+                             @(tipo == "Cara" ? "-14px" : tipo == "Camisa" ? "-20px" : "53px");
+                     " />
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const contenedor = document.getElementById('contenedor-' + targetId);
+
+            document.querySelectorAll('.tipo-contenedor').forEach(div => {
+                if (div !== contenedor) {
+                    div.classList.add('hidden');
+                }
+            });
+
+            contenedor.classList.toggle('hidden');
+
+            btn.innerHTML = contenedor.classList.contains('hidden')
+                ? '▶ ' + targetId.charAt(0).toUpperCase() + targetId.slice(1)
+                : '▼ ' + targetId.charAt(0).toUpperCase() + targetId.slice(1);
+        });
+    });
+</script>
+}
