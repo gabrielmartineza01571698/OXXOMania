@@ -56,11 +56,11 @@
     <div class="acciones-inferiores">
         @if (!Model.MostrarTodos)
         {
-            <a class="boton-accion gris" asp-page="./Personalizacion" asp-route-mostrarTodos="true">Mostrar todos los objetos</a>
+            <a class="boton-accion gris" asp-page="./Personalizacion" asp-route-mostrarTodos="true">Ver todos los objetos</a>
         }
         else
         {
-            <a class="boton-accion gris" asp-page="./Personalizacion" asp-route-mostrarTodos="false">Ver solo equipados</a>
+            <a class="boton-accion gris" asp-page="./Personalizacion" asp-route-mostrarTodos="false">Ver solo objetos equipados</a>
         }
 
         <a class="boton-accion verde" asp-page="/Tienda">Ir a la tienda</a>
