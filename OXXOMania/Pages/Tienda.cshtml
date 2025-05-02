@@ -1,0 +1,222 @@
+@page
+@model TiendaModel // indica el modelo de datos que la página usa 
+@using OXXOMania.Models
+@{
+    ViewData["Title"] = "Tienda"; // establece el título de la pestaña
+}
+
+<!-- estilos css especificos para esta página -->
+<style>
+    /* estilos generales para el cuerpo de la página */
+    body {
+        background-color: #fff5e1;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        color: #3a2e1e;
+    }
+
+    /* estilo para el título principal de la tienda */
+    .titulo-tienda {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        background-color: #3a2e1e;
+        color: white;
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+    /* estilo para mostrar el saldo actual del usuario */
+    .saldo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 22px;
+    }
+
+
+    /* cuadricula para organizar productos en tarjetas */
+    .productos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    /* estilo de cada tarjeta de producto */
+    .contenedor-producto {
+        border: 2px solid #3a2e1e;
+        background-color: #fffef8;
+        border-radius: 8px;
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 220px;
+        box-shadow: 2px 2px 0px #3a2e1e;
+    }
+
+    .info-objeto {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .nombre-objeto {
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    /* precio del objeto en monedas */
+    .costo-objeto {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    .costo-objeto img {
+        width: 18px;
+        height: 18px;
+        image-rendering: pixelated;
+    }
+
+    /* boton para canjear producto */
+    .btn-canjear {
+        background-color: #b85628;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        font-size: 16px;
+        border-radius: 4px;
+        margin-top: auto;
+        align-self: flex-end;
+        cursor: pointer;
+    }
+
+    /* estado del botón desactivado (sin suficientes monedas) */
+    .btn-canjear:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
+    }
+
+    /* estilos para la imagen del producto */
+    .imagen-objeto {
+        width: 80px;
+        height: auto;
+        margin-top: 5px;
+        image-rendering: pixelated;
+    }
+
+    /* cuadro para productos sin imagen */
+    .sin-imagen {
+        width: 80px;
+        height: 80px;
+        background-color: #ddd;
+        border: 1px dashed #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #555;
+        margin-top: 5px;
+    }
+
+    /* mensaje despues de canjear un objeto */
+    .mensaje {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: green;
+    }
+
+    /* estilo para el selector de categorias */
+    select.form-select {
+        width: auto;
+        padding: 10px 16px;
+        border: 2px solid #3a2e1e;
+        border-radius: 6px;
+        background-color: #fffef8;
+        font-size: 18px;
+        color: #3a2e1e;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    select.form-select:hover,
+    select.form-select:focus {
+        border-color: #b85628;
+        box-shadow: 0 0 5px rgba(184, 86, 40, 0.5);
+    }
+</style>
+
+<!-- cuerpo principal de la pagina -->
+<div class="container mt-4">
+    <h2 class="titulo-tienda">Tienda</h2>
+
+    <!-- selector de categorias (Cosmeticos o Premios reales) -->
+    <form method="post">
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría:</label>
+            <select class="form-select" id="categoria" name="CategoriaSeleccionada" onchange="this.form.submit()">
+                <!-- seleccion dinamica basada en el modelo -->
+                <option value="Cosmeticos" selected="@("Cosmeticos" == Model.CategoriaSeleccionada)">Cosméticos para avatar</option>
+                <option value="Premio" selected="@("Premio" == Model.CategoriaSeleccionada)">Premios reales</option>
+            </select>
+        </div>
+    </form>
+
+    <!-- mostrar saldo actual del usuario -->
+    <div class="saldo">
+        <img src="/images/coin.png" alt="Moneda" />
+        <span>@Model.Monedas monedas</span>
+    </div>
+
+    <!-- mensaje de confirmación (opcional) -->
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <div class="mensaje">@Model.Mensaje</div>
+    }
+
+    <!-- cuadricula con los productos disponibles para canjear -->
+    <div class="productos-grid">
+        @foreach (var item in Model.Productos)
+        {
+            <div class="contenedor-producto">
+                <div class="info-objeto">
+                    <div class="nombre-objeto">@item.Nombre</div>
+
+                    <!-- imagen del objeto o texto alternativo -->
+                    @if (!string.IsNullOrEmpty(item.Imagen))
+                    {
+                        <img src="/images/@item.Imagen" alt="@item.Nombre" class="imagen-objeto" />
+                    }
+                    else
+                    {
+                        <div class="sin-imagen">Sin imagen</div>
+                    }
+
+                    <!-- costo del producto -->
+                    <div class="costo-objeto">
+                        <img src="/images/coin.png" alt="moneda" />
+                        <span>@item.Precio monedas</span>
+                    </div>
+                </div>
+
+                <!-- boton para canjear (activado/desactivado según saldo) -->
+                <form method="post" asp-page-handler="Canjear">
+                    <input type="hidden" name="NombreProducto" value="@item.Nombre" />
+                    <button type="submit" class="btn-canjear"
+                        @(Model.Monedas >= item.Precio ? "" : "disabled")>
+                        Canjear
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+</div> 
