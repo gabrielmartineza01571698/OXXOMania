@@ -48,7 +48,7 @@ namespace OXXOMania.Pages
         }
 
         // se ejecuta cuando la pagina recibe un POST general (cambio de categoría)
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()//devolver respuesta al navegador
         {
             CargarProductos(); // recarga productos después de cambiar la categoría
 
@@ -107,7 +107,7 @@ namespace OXXOMania.Pages
             if (CategoriaSeleccionada == "Premio")
             {
                 Productos = _context.Objetos
-                    .Where(o => o.Tipo == "Premio")
+                    .Where(o => o.Tipo == "Premio") //querys para acceder y manipular datos desde la base de datos
                     .ToList();
             }
             else // Por defecto carga productos cosméticos
