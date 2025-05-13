@@ -8,6 +8,13 @@ namespace OXXOMania.Pages
 {
     public class PersonalizacionModel : PageModel
     {
+        private readonly DataBaseContext _context;
+
+        public PersonalizacionModel(DataBaseContext context)
+        {
+            _context = context;
+        }
+
         public class ObjetoConEstado : Objeto
         {
             public bool Equipado { get; set; }
@@ -32,11 +39,9 @@ namespace OXXOMania.Pages
 
         public IActionResult OnPost()
         {
-            var context = new DataBaseContext();
-            using var connection = new MySqlConnection(context.ConnectionString);
+            using var connection = _context.GetConnection();
             connection.Open();
 
-            // Desactivar objetos del mismo tipo
             string desactivarQuery = @"
                 UPDATE Tenencia t
                 JOIN Objeto o ON t.id_objeto = o.id_objeto
@@ -51,7 +56,6 @@ namespace OXXOMania.Pages
                 cmd1.ExecuteNonQuery();
             }
 
-            // Activar el nuevo objeto
             string activarQuery = "UPDATE Tenencia SET equipado = 1 WHERE id_usuario = @usuarioId AND id_objeto = @idObjeto;";
             using (var cmd2 = new MySqlCommand(activarQuery, connection))
             {
@@ -65,8 +69,7 @@ namespace OXXOMania.Pages
 
         private void CargarObjetos()
         {
-            var context = new DataBaseContext();
-            using var connection = new MySqlConnection(context.ConnectionString);
+            using var connection = _context.GetConnection();
             connection.Open();
 
             string query = @"
