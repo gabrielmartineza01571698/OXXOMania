@@ -7,7 +7,7 @@
 <h2>Personalización de Avatar</h2>
 
 @{
-    var tipos = new[] { "Camisa", "Pantalon", "Cara" };
+    var tipos = new[] { "Camisa", "Pantalon", "Gorra" };
 }
 
 <section class="personalizacion-seccion">
@@ -15,7 +15,7 @@
     <div class="scroll-contenedor">
         @foreach (var tipo in tipos)
         {
-            var tipoId = tipo.ToLower(); // e.g. "camisa"
+            var tipoId = tipo.ToLower(); //"camisa"
             <div class="tipo-seccion">
                 <button type="button" class="toggle-btn" data-target="@tipoId">
                     ▶ @tipo
@@ -67,10 +67,10 @@
     </div>
 </section>
 
-<!-- Avatar compuesto superpuesto a la derecha -->
+<!-- Avatar compuesto a la derecha -->
 <div class="avatar-preview">
     <div class="avatar-box">
-        @foreach (var tipo in new[] { "Cara", "Camisa", "Pantalon" })
+        @foreach (var tipo in new[] { "Gorra", "Camisa", "Pantalon" })
         {
             var objeto = Model.ObjetosEquipables.FirstOrDefault(o => o.Tipo == tipo && o.Equipado);
             if (objeto != null)
@@ -82,9 +82,9 @@
                          height: 100%; 
                          object-fit: contain; 
                          z-index: 
-                             @(tipo == "Cara" ? 3 : tipo == "Camisa" ? 2 : 1); 
+                             @(tipo == "Gorra" ? 3 : tipo == "Camisa" ? 2 : 1); 
                          top: 
-                             @(tipo == "Cara" ? "-14px" : tipo == "Camisa" ? "-20px" : "53px");
+                             @(tipo == "Gorra" ? "-14px" : tipo == "Camisa" ? "-20px" : "53px");
                      " />
             }
         }
