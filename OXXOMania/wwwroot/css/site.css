@@ -209,3 +209,8 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* sombra ligera */
   background-color: white; /* fondo blanco para contraste */
 }
+
+.div-login {
+  display: flex; 
+  align-items: center;
+}
