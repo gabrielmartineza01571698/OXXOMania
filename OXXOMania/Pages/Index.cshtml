@@ -4,13 +4,33 @@
     ViewData["Title"] = "Home page";
 }
 
+<div class="container d-flex justify-content-center align-items-center min-vh-100"> 
 
-<div class="row">
-    <div class="col">
-        <img src="~/images/oxxo-logo.png" alt="Icono OXXO" width="300">
+
+<div class="div-login row border rounded-5 shadow">
+    <div class="col-md-6">
+        <img src="~/images/oxxo-logo.png" alt="Icono OXXO" width="100px">
+        <h1>Iniciar sesión</h1>
     </div>
-    <div class="row">
-        <p>texto</p>
+    <div class="col-md-6">
+        <div class="row">
+            <form method="post">
+                <h4>Usuario:</h4>
+                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="user" placeholder="Introduce tu usuario" />
+                <br>
+                <h4>Contraseña:</h4>
+                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="password" placeholder="Introduce tu contraseña"/>
+                <br><br>
+                <input type="submit" class="btn-login btn btn-lg w-100 fs-6" value="Iniciar sesión"/>
+            </form>            
+        </div>
+        <br>
+        <div class="row">
+            <p>¿No tienes cuenta? <a href="">Crea una cuenta</a></p>
+            
+        </div>
+ 
     </div>
+</div>
 </div>
 

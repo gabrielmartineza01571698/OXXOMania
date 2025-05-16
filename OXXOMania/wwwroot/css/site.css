@@ -211,6 +211,12 @@ body {
 }
 
 .div-login {
-  display: flex; 
-  align-items: center;
+  width: 930px;
+  background-color: white;
+  padding: 110px 70px;
+}
+
+.btn-login {
+  background-color: #ffbc24;
+  color: white;
 }
