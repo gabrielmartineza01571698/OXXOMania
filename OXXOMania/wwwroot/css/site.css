@@ -209,3 +209,14 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* sombra ligera */
   background-color: white; /* fondo blanco para contraste */
 }
+
+.div-login {
+  width: 930px;
+  background-color: white;
+  padding: 110px 70px;
+}
+
+.btn-login {
+  background-color: #ffbc24;
+  color: white;
+}
