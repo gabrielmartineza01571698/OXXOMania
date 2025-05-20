@@ -216,6 +216,12 @@ body {
   padding: 110px 70px;
 }
 
+.div-cc {
+  width: 930px;
+  background-color: white;
+  padding: 60px 70px;
+}
+
 .btn-login {
   background-color: #ffbc24;
   color: white;
