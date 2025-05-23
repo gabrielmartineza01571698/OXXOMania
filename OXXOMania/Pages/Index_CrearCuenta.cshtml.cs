@@ -6,6 +6,10 @@ namespace OXXOMania.Pages;
 public class Index_CrearCuentaModel : PageModel
 {
     [BindProperty]
+    public string? nombre {get; set;}
+    [BindProperty]
+    public int? apellido {get; set;}
+    [BindProperty]
     public string? correo {get; set;}
     [BindProperty]
     public int? user {get; set;}
