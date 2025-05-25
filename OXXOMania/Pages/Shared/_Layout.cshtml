@@ -5,6 +5,29 @@
 @{
     var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
     Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
+
+    string avatarHead = "~/images/objetos/f_1.png"; // Default
+    var headOptions = new Dictionary<int, string>()
+    {
+        {1, "~/images/objetos/f_1.png"},
+        {2, "~/images/objetos/f_2.png"},
+        {3, "~/images/objetos/f_3.png"}
+    };
+
+    if (usr != null && usr.id_usuario > 0)
+    {
+        var db = Context.RequestServices.GetService(typeof(OXXOMania.Model.DataBaseContext)) as OXXOMania.Model.DataBaseContext;
+        int cabeza = db.AgarrarCabeza(usr.id_usuario);
+        if (headOptions.ContainsKey(cabeza))
+        {
+            avatarHead = headOptions[cabeza];
+        }
+        <script>
+            console.log("DEBUG - id_usuario: @usr.id_usuario");
+            console.log("DEBUG - cabeza: @cabeza");
+            console.log("DEBUG - avatar path: '@avatarHead'");
+        </script>
+    }
 }
 
 <!DOCTYPE html>
@@ -31,16 +54,18 @@
             </ul>
         </nav>
     </div>
+
     <div class="main-content">
         @RenderBody()
     </div>
+
     <div class="topbar">
         <div class="toptext">
             @if (usr != null)
             {
                 <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
                     <a class="toptext" asp-page="/Personalizacion">
-                        <img src="~/images/objetos/f_1.png" height="70px" style="margin-top: 15px;" />
+                        <img src="@avatarHead" height="70px" style="margin-top: 15px;" />
                         @usr.nombre
                     </a>
                 </li>
