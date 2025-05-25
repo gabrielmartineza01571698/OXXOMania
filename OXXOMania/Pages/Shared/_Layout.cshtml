@@ -20,7 +20,7 @@
         int cabeza = db.AgarrarCabeza(usr.id_usuario);
         if (headOptions.ContainsKey(cabeza))
         {
-            avatarHead = headOptions[cabeza];
+            avatarHead = Url.Content(headOptions[cabeza]);
         }
         <script>
             console.log("DEBUG - id_usuario: @usr.id_usuario");
@@ -65,7 +65,7 @@
             {
                 <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
                     <a class="toptext" asp-page="/Personalizacion">
-                        <img src="@avatarHead" height="70px" style="margin-top: 15px;" />
+                        <img src="@avatarHead" height="70px" style="margin-top: 30px;" />
                         @usr.nombre
                     </a>
                 </li>
