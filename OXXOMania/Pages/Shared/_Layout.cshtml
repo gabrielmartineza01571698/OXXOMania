@@ -1,4 +1,36 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json
+@using OXXOMania.Model
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
+    Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
+
+    string avatarHead = "~/images/objetos/f_1.png"; // Default
+    var headOptions = new Dictionary<int, string>()
+    {
+        {1, "~/images/objetos/f_1.png"},
+        {2, "~/images/objetos/f_2.png"},
+        {3, "~/images/objetos/f_3.png"}
+    };
+
+    if (usr != null && usr.id_usuario > 0)
+    {
+        var db = Context.RequestServices.GetService(typeof(OXXOMania.Model.DataBaseContext)) as OXXOMania.Model.DataBaseContext;
+        int cabeza = db.AgarrarCabeza(usr.id_usuario);
+        if (headOptions.ContainsKey(cabeza))
+        {
+            avatarHead = Url.Content(headOptions[cabeza]);
+        }
+        <script>
+            console.log("DEBUG - id_usuario: @usr.id_usuario");
+            console.log("DEBUG - cabeza: @cabeza");
+            console.log("DEBUG - avatar path: '@avatarHead'");
+        </script>
+    }
+}
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -22,10 +54,29 @@
             </ul>
         </nav>
     </div>
+
     <div class="main-content">
         @RenderBody()
     </div>
-    @RenderSection("Scripts", required: false)
 
+    <div class="topbar">
+        <div class="toptext">
+            @if (usr != null)
+            {
+                <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
+                    <a class="toptext" asp-page="/Personalizacion">
+                        <img src="@avatarHead" height="70px" style="margin-top: 30px;" />
+                        @usr.nombre
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-user"><a class="toptext" asp-page="/Index">Iniciar sesión</a></li>
+            }
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
