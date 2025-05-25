@@ -267,3 +267,51 @@ body {
   background-color: #ffbc24;
   color: white;
 }
+
+/*vista asesor*/
+
+.content-wrapper {
+  margin-left: 20px;
+  margin-top: 65px;
+  transition: .5s;
+  vertical-align: middle;
+}
+
+.content-wrapper.hide {
+  margin-left: 0;
+}
+
+.top-chart-ganancia{
+  border-radius: 5px;
+  padding-top: 15px;
+  box-shadow: -2px 3px 13px 0px #66666621;
+}
+
+.last-month {
+  line-height: 20px;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.last-month h5 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.last-month p {
+  font-size: 12px;
+  color: #ad7a03;
+}
+
+.ganancia {
+  margin: 12px 0;
+}
+
+.ganancia h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.col-lg-4 {
+  background-color: white;
+}
