@@ -1,15 +1,15 @@
 @page
 @model Podium
+
 @{
     ViewData["Title"] = "Podium";
     Layout = "_Layout";
 }
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
+<div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px;">
+    <div class="div-login row border rounded-5 shadow justify-content-center">
 
-<div class="div-login row border rounded-5 shadow justify-content-center">
+        @Model.NombreUsuario
 
-    Chismoso
-
-</div>
+    </div>
 </div>

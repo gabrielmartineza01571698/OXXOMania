@@ -70,14 +70,14 @@ namespace OXXOMania.Model
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("select * from tenencia t inner join usuario u on u.id_usuario = t.id_usuario where u.id_usuario = @id and t.equipado = 1 and t.id_objeto between 1 and 3;", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("CALL agarrarCabeza(@id);", conexion); // "" query con parametro
             cmd.Parameters.AddWithValue("@id", id_usuario);
             int cabeza = 0;
             using (var reader = cmd.ExecuteReader())
             {
                 if (reader.Read())
                 {
-                    cabeza = Convert.ToInt32(reader["id_tenencia"]);
+                    cabeza = Convert.ToInt32(reader["id_objeto"]);
                 }
                 else
                 {
