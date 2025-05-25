@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json
+@using OXXOMania.Model
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
+    Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
+}
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -27,13 +36,22 @@
     </div>
     <div class="topbar">
         <div class="toptext">
-            <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")"><a class="toptext" asp-page="/Personalizacion">
-            <img src="~/images/objetos/f_1.png" height="70px" style="margin-top: 15px;">
-            Marco
-            </a></li>
+            @if (usr != null)
+            {
+                <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
+                    <a class="toptext" asp-page="/Personalizacion">
+                        <img src="~/images/objetos/f_1.png" height="70px" style="margin-top: 15px;" />
+                        @usr.nombre
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-user"><a class="toptext" asp-page="/Index">Iniciar sesión</a></li>
+            }
         </div>
     </div>
-    @RenderSection("Scripts", required: false)
 
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

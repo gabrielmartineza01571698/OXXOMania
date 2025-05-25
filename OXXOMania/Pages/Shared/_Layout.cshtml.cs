@@ -17,14 +17,16 @@ namespace OXXOMania.Pages
         public String UserName;
         int logged;
 
-        public void OnGet(Usuario User)
+        public Usuario Usr { get; set; }
+
+    public void OnGet()
+    {
+        if (TempData["Usr"] != null)
         {
-        usr = User;
-
-        UserName = usr.nombre;
-
-
+            Usr = JsonSerializer.Deserialize<Usuario>(TempData["Usr"].ToString());
         }
+        UserName = Usr.nombre;
+    }
 
     }
 }

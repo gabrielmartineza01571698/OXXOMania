@@ -42,7 +42,8 @@ public class IndexModel : PageModel
             if (usr.contraseña == password)
             {
                 //usuario y contraseña correctos entrar a homepage
-                return RedirectToPage("/Podium", new {Usr = usr});
+                HttpContext.Session.SetString("Usr", JsonSerializer.Serialize(usr));
+                return RedirectToPage("/Podium");
             }
             else
             {
