@@ -5,6 +5,7 @@ body {
 }
 
 .sidebar {
+  position: fixed;
   width: 240px;
   background-color: #b45f27;
   color: white;
@@ -12,6 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 10;
 }
 
 .logo-container {
@@ -35,6 +37,17 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  color: white;
+}
+
+.nav-user {
+  padding: 15px 20px;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color:#b45f27 
 }
 
 .nav-item:hover,
@@ -63,6 +76,31 @@ body {
 .nav-item.selected a {
   background-color: #8c471d;
   color: #f0f0f0;
+}
+
+/* === ICONO USUARIO === */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 10000px;
+  height: 60px;
+  background-color: #bebdbd;
+  color: #b45f27; 
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.toptext{
+  font-weight: bolder;
+  font-size: 20px;
+  color: #b45f27 ;
+  text-decoration: none;
+  font-style: normal;
 }
 
 /* === OBJETOS AVATAR === */
@@ -211,15 +249,18 @@ body {
 }
 
 .div-login {
-  width: 930px;
+  width: 960px;
   background-color: white;
   padding: 110px 70px;
+  margin: 100px 0px;
+
 }
 
 .div-cc {
-  width: 930px;
+  width: 960px;
   background-color: white;
   padding: 60px 70px;
+  margin: 100px 0px;
 }
 
 .btn-login {
