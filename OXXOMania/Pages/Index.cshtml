@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -6,32 +6,39 @@
 }
 
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100"> 
-
-
-<div class="div-login row border rounded-5 shadow">
-    <div class="col-md-6">
-        <img src="~/images/oxxo-logo.png" alt="Icono OXXO" width="100px">
-        <h1>Iniciar sesión</h1>
-    </div>
-    <div class="col-md-6">
-        <div class="row">
-            <form method="post">
-                <h4>Usuario:</h4>
-                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="user" placeholder="Introduce tu usuario" />
-                <br>
-                <h4>Contraseña:</h4>
-                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="password" placeholder="Introduce tu contraseña"/>
-                <br><br>
-                <input type="submit" class="btn-login btn btn-lg w-100 fs-6" value="Iniciar sesión"/>
-            </form>            
+<div class="container d-flex justify-content-center align-items-center "> 
+    <div class="div-login row border rounded-5 shadow">
+        <div class="col-md-6">
+            <img src="~/images/oxxo-logo.png" alt="Icono OXXO" width="100px">
+            <h1>Iniciar sesión</h1>
         </div>
-        <br>
-        <div class="row">
-            <p>¿No tienes cuenta? <a asp-page="/Index_CrearCuenta">Crea una cuenta</a></p>
+        <div class="col-md-6">
+            <div class="row">
+                <form method="post">
+                    <div>
+                        <h5>Usuario:</h5>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6 mb-2" asp-for="user" placeholder="Introduce tu usuario" />
+                        <span asp-validation-for="user" class="text-danger small"></span>
+                    </div>
+
+                    <div>
+                        <h5>Contraseña:</h5>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6 mb-4" asp-for="password" placeholder="Introduce tu contraseña"/>
+                        <span asp-validation-for="password" class="text-danger small"></span>
+                    </div>
+                    
+                    <input type="submit" class="btn-login btn btn-lg w-100 fs-6 mb-4" value="Iniciar sesión"/>
+                </form>            
+            </div>
+            <div class="row">
+                <p>¿No tienes cuenta? <a asp-page="/Index_CrearCuenta" class="link-danger">Crea una cuenta</a></p>
+            </div>
+    
         </div>
- 
     </div>
 </div>
-</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

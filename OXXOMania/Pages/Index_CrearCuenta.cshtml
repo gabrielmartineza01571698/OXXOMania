@@ -6,7 +6,7 @@
 }
 
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100"> 
+<div class="container d-flex justify-content-center align-items-center"> 
 <div class="div-cc row border rounded-5 shadow">
     <div class="col-md-6">
         <img src="~/images/oxxo-logo.png" alt="Icono OXXO" width="100px">
@@ -15,24 +15,29 @@
     <div class="col-md-6">
         <div class="row">
             <form method="post">
-                <h4>Correo:</h4>
-                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="correo" placeholder="Introduce tu usuario" />
-                <br>
-                <h4>Usuario:</h4>
-                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="user" placeholder="Introduce tu usuario" />
-                <br>
-                <h4>Sucursal:</h4>
-                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="sucursal" placeholder="Introduce tu usuario" />
-                <br>
-                <h4>Contraseña:</h4>
-                <input type="text" class="form-control form-control-lg bg-light fs-6" asp-for="password" placeholder="Introduce tu contraseña"/>
-                <br><br>
-                <input type="submit" class="btn-login btn btn-lg w-100 fs-6" value="Crear cuenta"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Nombre:</h6>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6 mb-2" asp-for="nombre" placeholder="Introduce tu nombre" />
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Apellido:</h6>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6 mb-2" asp-for="apellido" placeholder="Introduce tu apellido" />
+                    </div>
+                </div>
+                <h6>Correo:</h6>
+                <input type="text" class="form-control form-control-lg bg-light fs-6 mb-2" asp-for="correo" placeholder="Introduce tu correo" />
+                <h6>Usuario:</h6>
+                <input type="text" class="form-control form-control-lg bg-light fs-6 mb-2" asp-for="user" placeholder="Introduce un usuario" />
+                <h6>Sucursal:</h6>
+                <input type="text" class="form-control form-control-lg bg-light fs-6 mb-2" asp-for="sucursal" placeholder="Introduce tu usuario" />
+                <h6>Contraseña:</h6>
+                <input type="text" class="form-control form-control-lg bg-light fs-6 mb-4" asp-for="password" placeholder="Introduce tu contraseña"/>
+                <input type="submit" class="btn-login btn btn-lg w-100 fs-6 mb-4" value="Crear cuenta"/>
             </form>            
         </div> 
-        <br>
         <div class="row">
-            <p>¿Ya tienes cuenta? <a asp-page="/Index">Inicia sesión</a></p>
+            <p>¿Ya tienes cuenta? <a asp-page="/Index" class="link-danger">Inicia sesión</a></p>
         </div>
     </div>
 </div>

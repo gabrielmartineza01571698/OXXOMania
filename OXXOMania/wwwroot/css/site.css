@@ -249,15 +249,18 @@ body {
 }
 
 .div-login {
-  width: 930px;
+  width: 960px;
   background-color: white;
   padding: 110px 70px;
+  margin: 100px 0px;
+
 }
 
 .div-cc {
-  width: 930px;
+  width: 960px;
   background-color: white;
   padding: 60px 70px;
+  margin: 100px 0px;
 }
 
 .btn-login {
