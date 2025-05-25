@@ -10,7 +10,7 @@ namespace OXXOMania.Model
 
         public DataBaseContext()
         {
-            ConnectionString = "Server=127.0.0.1;Port=3306;Database=oxxomania_;Uid=root;password=Rosas05!;";
+            ConnectionString = "Server=mysql-174e7f49-tec-7e55.h.aivencloud.com;Port=11595;Database=OXXOMania;Uid=avnadmin;password=AVNS_fRuRcGKq34nw0MHFPCd;";
         }
 
         public MySqlConnection GetConnection()

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using OXXOMania.Model;
+using System.Text.Json;
+
 
 namespace OXXOMania.Pages;
 
@@ -40,7 +42,7 @@ public class IndexModel : PageModel
             if (usr.contraseña == password)
             {
                 //usuario y contraseña correctos entrar a homepage
-                return RedirectToPage("Index_CrearCuenta");
+                return RedirectToPage("/Podium", new {Usr = usr});
             }
             else
             {
