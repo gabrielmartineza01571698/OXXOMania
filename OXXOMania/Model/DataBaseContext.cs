@@ -50,17 +50,19 @@ namespace OXXOMania.Model
             conexion.Close();
             return myUsuario;
         }
-        public void AgregarUsuario(string nombre, string apellido, string correo, string user, string sucursal, string password) //solo recibe un usuario
+        public void AgregarUsuario(string nombre, string apellido, string user, string sucursal, string password) //solo recibe un usuario
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("Insert into Usuarios values(@nombre, @apellido, @correo, @user, @sucursal, @password)", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO `usuario` (nombre,apellido,usuario,sucursal,contraseña,monedas,score) VALUES (@nombre, @apellido, @user, @sucursal, @password,0,0)", conexion); // "" query con parametro
             cmd.Parameters.AddWithValue("@nombre", nombre);
             cmd.Parameters.AddWithValue("@apellido", apellido);
-            cmd.Parameters.AddWithValue("@correo", correo);
+            //cmd.Parameters.AddWithValue("@correo", correo);
             cmd.Parameters.AddWithValue("@user", user);
             cmd.Parameters.AddWithValue("@sucursal", sucursal);
             cmd.Parameters.AddWithValue("@password", password);
+
+            cmd.ExecuteNonQuery();
 
             conexion.Close();
             //creo q le falta
