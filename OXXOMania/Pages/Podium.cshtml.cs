@@ -8,26 +8,25 @@ namespace OXXOMania.Pages
 {
     public class Podium : PageModel
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor lectorSesion;
 
         public Podium(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContextAccessor = httpContextAccessor;
+            lectorSesion = httpContextAccessor;
         }
 
         public string? NombreUsuario { get; set; }
 
         public void OnGet()
         {
-            var jsonUsr = _httpContextAccessor.HttpContext?.Session.GetString("Usr");
+            var jsonUsr = lectorSesion.HttpContext?.Session.GetString("Usr");
 
             if (!string.IsNullOrEmpty(jsonUsr))
             {
                 Usuario usr = JsonSerializer.Deserialize<Usuario>(jsonUsr);
-                NombreUsuario = usr.nombre;
+                NombreUsuario = usr.nombre; 
             }
 
-            // Aquí podrías cargar los datos del podio desde base de datos o lógica de negocio
         }
     }
 }
