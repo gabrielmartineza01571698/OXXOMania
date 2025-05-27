@@ -51,7 +51,10 @@
                 <li class="nav-item @(Context.Request.Path == "/Puntajes" ? "selected" : "")"><a asp-page="/Podium"><i class="fa fa-chart-bar"></i> Podium</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Perfil" ? "selected" : "")"><a asp-page="/Personalizacion"><i class="fa fa-user"></i> Mi perfil</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Juego" ? "selected" : "")"><a asp-page="/Juego"><i class="fa fa-gamepad"></i> Juego</a></li>
-                <li class="nav-item @(Context.Request.Path == "/VistaAsesor" ? "selected" : "")"><a asp-page="/VistaAsesor"><i class="fa fa-cog"></i> VistaAsesor </a></li>
+                @if (usr.id_asesor == 0)
+                    {
+                        <li class="nav-item @(Context.Request.Path == "/VistaAsesor" ? "selected" : "")"><a asp-page="/VistaAsesor"><i class="fa fa-cog"></i> VistaAsesor </a></li>
+                    }
             </ul>
         </nav>
     </div>
@@ -62,19 +65,12 @@
 
     <div class="topbar">
         <div class="toptext">
-            @if (usr != null)
-            {
-                <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
-                    <a class="toptext" asp-page="/Personalizacion">
-                        <img src="@avatarHead" height="70px" style="margin-top: 30px;" />
-                        @usr.nombre
-                    </a>
-                </li>
-            }
-            else
-            {
-                <li class="nav-user"><a class="toptext" asp-page="/Index">Iniciar sesión</a></li>
-            }
+            <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
+                <a class="toptext" asp-page="/Personalizacion">
+                    <img src="@avatarHead" height="70px" style="margin-top: 30px;" />
+                    @usr.nombre
+                </a>
+            </li>
         </div>
     </div>
 
