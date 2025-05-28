@@ -72,7 +72,7 @@ namespace OXXOMania.Model
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("CALL agarrarCabeza(@id);", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("call agarrarCabeza(@id);", conexion); // "" query con parametro
             cmd.Parameters.AddWithValue("@id", id_usuario);
             int cabeza = 0;
             using (var reader = cmd.ExecuteReader())
@@ -90,5 +90,39 @@ namespace OXXOMania.Model
             conexion.Close();
             return cabeza;
         }
+
+        public List<PodiumUsuario> AgarrarLugares()
+            {
+                List<PodiumUsuario> listaUsuarios = new List<PodiumUsuario>();
+
+                using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+                {
+                    conexion.Open();
+                    string query = "select p.id_usuario, u.nombre, u.apellido, u.monedas, p.puntaje, p.tiempo_jugado, p.id_videojuego from partida p inner join usuario u on p.id_usuario = u.id_usuario order by p.puntaje desc";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conexion);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PodiumUsuario u = new PodiumUsuario
+                            {
+                                id_usuario = Convert.ToInt32(reader["id_usuario"]),
+                                nombre = reader["nombre"].ToString(),
+                                apellido = reader["apellido"].ToString(),
+                                monedas = Convert.ToInt32(reader["monedas"]),
+                                puntaje = Convert.ToInt32(reader["puntaje"]),
+                                tiempo_jugado = Convert.ToInt32(reader["tiempo_jugado"]),
+                                id_videojuego = Convert.ToInt32(reader["id_videojuego"])
+                            };
+
+                            listaUsuarios.Add(u);
+                        }
+                    }
+                }
+
+                return listaUsuarios;
+            }
     }
 }
