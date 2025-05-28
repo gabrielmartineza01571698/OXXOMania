@@ -7,7 +7,7 @@ body {
 .sidebar {
   position: fixed;
   width: 240px;
-  background-color: #b45f27;
+  background-color: #B81E24;
   color: white;
   height: 100vh;
   display: flex;
@@ -47,12 +47,13 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  color:#b45f27 
+  color:#770E0E 
 }
 
 .nav-item:hover,
 .nav-item.selected {
-  background-color: #8c471d;
+  background-color: #770E0E;
+  border-radius: 40px;
 }
 
 .main-content {
@@ -74,7 +75,7 @@ body {
 
 .nav-item a:hover,
 .nav-item.selected a {
-  background-color: #8c471d;
+  background-color: #770E0E;
   color: #f0f0f0;
 }
 
