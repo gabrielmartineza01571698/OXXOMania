@@ -63,16 +63,20 @@
         @RenderBody()
     </div>
 
-    <div class="topbar">
+    <div class="topbar d-flex align-items-center justify-content-between" style="padding-left: 240px; padding-right: 30px;">
         <div class="toptext">
-            <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
-                <a class="toptext" asp-page="/Personalizacion">
+            OXXOMANIA
+        </div>
+        <div class="topusuario">
+            <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")" style="list-style: none;">
+                <a class="topusuario" asp-page="/Personalizacion" style="display: flex; align-items: center; gap: 10px;">
                     <img src="@avatarHead" height="70px" style="margin-top: 30px;" />
                     @usr.nombre
                 </a>
             </li>
         </div>
     </div>
+
 
     @RenderSection("Scripts", required: false)
 </body>
