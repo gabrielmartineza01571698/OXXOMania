@@ -15,7 +15,55 @@
     };
 }
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px; padding-top: 50px;">
+<div style="padding-left: 240px; padding-top: 100px;">
+  <div class="grid-podium">
+      <div class="second-place">
+        <td>
+            <img src="@Model.AvatarPath2" height="150px" style="margin-top: 30px;" />
+        </td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[1].nombre</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[1].apellido</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[1].score</td>
+        <br/>
+        <td class="score-text">@Model.ListaUsuarios[1].monedas</td>
+      </div>
+      
+      <div class="first-place">
+        
+        <td>
+            <img src="@Model.AvatarPath1" height="200px" style="margin-top: 30px;" />
+        </td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[0].nombre</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[0].apellido</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[0].score</td>
+        <br/>
+        <td class="score-text">@Model.ListaUsuarios[0].monedas</td>
+      </div>
+      
+      <div class="third-place">
+        <td>
+            <img src="@Model.AvatarPath3" height="100px" style="margin-top: 30px;" />
+        </td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[2].nombre</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[2].apellido</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[2].score</td>
+        <br/>
+        <td class="score-text">@Model.ListaUsuarios[2].monedas</td>
+      </div>
+  </div>
+</div>
+
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px; padding-top: 10px;">
     <div class="row border rounded-5 shadow justify-content-center p-4 bg-white w-100">
         <h2 class="text-center mb-4">🏆 Podio de Usuarios</h2>
 
@@ -32,11 +80,11 @@
             </thead>
             <tbody>
                 
-                @for (int i = 0; i < Model.ListaUsuarios.Count; i++)
+                @for (int i = 3; i < Model.ListaUsuarios.Count; i++)
                     {
                         var usuario = Model.ListaUsuarios[i];
 
-                       string avatarPath = Url.Content(headOptions[usuario.cabeza]);
+                        string avatarPath = Url.Content(headOptions[usuario.cabeza]);
 
                         <tr class="table-text">
                             <td>
