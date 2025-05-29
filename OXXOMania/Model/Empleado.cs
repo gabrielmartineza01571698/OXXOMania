@@ -2,6 +2,7 @@
 namespace OXXOMania.Model {
     public class Empleado
     {
+        public string nombre_lider { get; set; }
         public string nombre_empleado { get; set; }
         public string apellido_empleado { get; set; }
         public TimeSpan horario_entrada { get; set; }

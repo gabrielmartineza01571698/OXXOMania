@@ -140,8 +140,40 @@ namespace OXXOMania.Model
                     {
                         Empleado e = new Empleado
                         {
-                            nombre_empleado = reader["nombre_empleado"].ToString(),
-                            apellido_empleado = reader["apellido_empleado"].ToString(),
+                            nombre_lider = reader["nombre_lider"].ToString(),
+                            nombre_empleado = reader["nombre"].ToString(),
+                            apellido_empleado = reader["apellido"].ToString(),
+                            horario_entrada = reader.GetTimeSpan(reader.GetOrdinal("horario_entrada")),
+                            horario_salida = reader.GetTimeSpan(reader.GetOrdinal("horario_salida")),
+                            dias_trabajo = reader["dias_trabajo"].ToString(),
+                        };
+
+                        listaEmpleados.Add(e);
+                    }
+                }
+            }
+
+            return listaEmpleados;
+        }
+
+        public List<Empleado> AgarrarTodosHorarios()
+        {
+            List<Empleado> listaEmpleados = new List<Empleado>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand("select e.*, u.nombre as nombre_lider from empleados e inner join usuario u on u.id_usuario = e.id_lider_tienda;", conexion);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Empleado e = new Empleado
+                        {
+                            nombre_lider = reader["nombre_lider"].ToString(),
+                            nombre_empleado = reader["nombre"].ToString(),
+                            apellido_empleado = reader["apellido"].ToString(),
                             horario_entrada = reader.GetTimeSpan(reader.GetOrdinal("horario_entrada")),
                             horario_salida = reader.GetTimeSpan(reader.GetOrdinal("horario_salida")),
                             dias_trabajo = reader["dias_trabajo"].ToString(),
@@ -173,6 +205,7 @@ namespace OXXOMania.Model
                     {
                         LideresAsesor u = new LideresAsesor
                         {
+                            id_usuario = Convert.ToInt32(reader["id_usuario"]),
                             nombre = reader["nombre"].ToString(),
                             apellido = reader["apellido"].ToString(),
                             sucursal = reader["sucursal"].ToString(),
