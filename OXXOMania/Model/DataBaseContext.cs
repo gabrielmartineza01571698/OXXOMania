@@ -91,6 +91,7 @@ namespace OXXOMania.Model
             return cabeza;
         }
 
+
         public List<PodiumUsuario> AgarrarLugares()
             {
                 List<PodiumUsuario> listaUsuarios = new List<PodiumUsuario>();

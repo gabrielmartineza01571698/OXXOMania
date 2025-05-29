@@ -6,5 +6,5 @@ namespace OXXOMania.Pages;
 
 public class VistaAsesor : PageModel
 {
-
+    
 }
