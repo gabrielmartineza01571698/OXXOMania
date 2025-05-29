@@ -19,6 +19,7 @@ namespace OXXOMania.Pages
 
         public int? id_asesor { get; set; }
         public List<LideresAsesor> listaLideres { get; set; } = new List<LideresAsesor>();
+        public List<Empleado> listaEmpleados { get; set; } = new List<Empleado>();
 
         public void OnGet()
         {
@@ -28,23 +29,34 @@ namespace OXXOMania.Pages
                 var usr = JsonSerializer.Deserialize<Usuario>(jsonUsr);
                 if (usr != null)
                 {
-                    id_asesor = usr.id_asesor = usr.id_usuario;
+                    id_asesor = usr.id_usuario;
                     if (id_asesor.HasValue)
                     {
                         listaLideres = db.AgarrarLideresdeAsesor(id_asesor.Value);
+                        listaEmpleados = db.AgarrarTodosHorarios();
                     }
                 }
             }
         }
 
-        public IActionResult OnGetDetalleLiderParcial(int id)
+        public IActionResult OnPostVerDetalle(int id_usuario)
         {
-            var empleados = db.AgarrarHorarios(id);
-            return new PartialViewResult
+            var jsonUsr = lectorSesion.HttpContext?.Session.GetString("Usr");
+            if (!string.IsNullOrEmpty(jsonUsr))
             {
-                ViewName = "_EmpleadosDeLiderPartial",
-                ViewData = new Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary<List<Empleado>>(ViewData, empleados)
-            };
+                var usr = JsonSerializer.Deserialize<Usuario>(jsonUsr);
+                if (usr != null)
+                {
+                    id_asesor = usr.id_usuario;
+                    if (id_asesor.HasValue)
+                    {
+                        listaLideres = db.AgarrarLideresdeAsesor(id_asesor.Value);
+                        listaEmpleados = db.AgarrarHorarios(id_usuario);
+                    }
+                }
+            }
+            return Page();
         }
+
     }
 }
