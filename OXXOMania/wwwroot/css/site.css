@@ -143,13 +143,14 @@ body {
   right: 0;
   width: 10000px;
   height: 60px;
-  background-color: #bebdbd;
+  background-color: white;
   color: #b45f27; 
   z-index: 9;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding-right: 20px;
+  border-bottom: 3px solid rgb(216, 216, 216);
 }
 
 .toptext{
