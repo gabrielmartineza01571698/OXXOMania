@@ -3,37 +3,101 @@
 @{
     ViewData["Title"] = "Podium";
     Layout = "_Layout";
+    
+
+    string avatarHead = "~/images/objetos/f_1.png"; // Default
+    var headOptions = new Dictionary<int, string>()
+    {
+        {6, "~/images/objetos/f_1.png"},
+        {7, "~/images/objetos/f_2.png"},
+        {8, "~/images/objetos/f_3.png"},
+        {9, "~/images/objetos/f_4.png"}
+    };
 }
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px; padding-top: 50px;">
+<div style="padding-left: 240px; padding-top: 100px;">
+  <div class="grid-podium">
+      <div class="second-place">
+        <td>
+            <img src="@Model.AvatarPath2" height="150px" style="margin-top: 30px;" />
+        </td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[1].nombre</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[1].apellido</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[1].score</td>
+        <br/>
+        <td class="score-text">@Model.ListaUsuarios[1].monedas</td>
+      </div>
+      
+      <div class="first-place">
+        
+        <td>
+            <img src="@Model.AvatarPath1" height="200px" style="margin-top: 30px;" />
+        </td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[0].nombre</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[0].apellido</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[0].score</td>
+        <br/>
+        <td class="score-text">@Model.ListaUsuarios[0].monedas</td>
+      </div>
+      
+      <div class="third-place">
+        <td>
+            <img src="@Model.AvatarPath3" height="100px" style="margin-top: 30px;" />
+        </td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[2].nombre</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[2].apellido</td>
+        <br/>
+        <td class="align-middle">@Model.ListaUsuarios[2].score</td>
+        <br/>
+        <td class="score-text">@Model.ListaUsuarios[2].monedas</td>
+      </div>
+  </div>
+</div>
+
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px; padding-top: 10px;">
     <div class="row border rounded-5 shadow justify-content-center p-4 bg-white w-100">
         <h2 class="text-center mb-4">🏆 Podio de Usuarios</h2>
 
-        <table class="table table-hover text-center">
+        <table class="text-center">
             <thead class="thead-light">
-                <tr>
-                    <th>Posición</th>
+                <tr class="table-header">
+                    <th></th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Monedas</th>
                     <th>Puntaje</th>
-                    <th>Tiempo Jugado</th>
+                    <th>Posición</th>
                 </tr>
             </thead>
             <tbody>
                 
-                @for (int i = 3; i < @Model.ListaUsuarios.Count; i++)
-                {
-                    var usuario = @Model.ListaUsuarios[i];
-                    <tr class="@(i == 0)">
-                        <td>@(i + 1)</td>
-                        <td>@usuario.nombre</td>
-                        <td>@usuario.apellido</td>
-                        <td>@usuario.monedas</td>
-                        <td>@usuario.puntaje</td>
-                        <td>@usuario.tiempo_jugado</td>
-                    </tr>
-                }
+                @for (int i = 3; i < Model.ListaUsuarios.Count; i++)
+                    {
+                        var usuario = Model.ListaUsuarios[i];
+
+                        string avatarPath = Url.Content(headOptions[usuario.cabeza]);
+
+                        <tr class="table-text">
+                            <td>
+                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
+                            </td>
+                            <td class="align-middle">@usuario.nombre</td>
+                            <td class="align-middle">@usuario.apellido</td>
+                            <td class="align-middle">@usuario.monedas</td>
+                            <td class="score-text">@usuario.score</td>
+                            <td class="align-middle" style="font-weight: bold;">#@(i+1)</td>
+                        </tr>
+                    }
+
             </tbody>
         </table>
     </div>
