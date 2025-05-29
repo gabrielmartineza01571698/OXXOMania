@@ -33,8 +33,9 @@ body {
 }
 
 .first-place {
-  background-color: rgb(223, 211, 142);
+  background-color: rgb(233, 205, 129);
   width: 200px;
+  border: #000000 solid 2px;
   height: 220px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
@@ -42,7 +43,8 @@ body {
 }
 
 .second-place {
-  background-color: silver;
+  background-color: rgb(233, 205, 129);
+  border: #000000 solid 2px;
   width: 200px;
   height: 180px;
   border-top-left-radius: 30px;
@@ -51,7 +53,8 @@ body {
 }
 
 .third-place {
-  background-color: #dbaf83;
+  background-color: rgb(233, 205, 129);
+  border: #000000 solid 2px;
   width: 200px;
   height: 150px;
   border-top-left-radius: 30px;
