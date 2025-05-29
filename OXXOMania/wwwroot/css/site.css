@@ -32,6 +32,46 @@ body {
   z-index: 10;
 }
 
+.grid-podium{
+  display: flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap: 20px;
+  height: 500px;
+}
+
+
+.first-place {
+  background-color: rgb(223, 211, 142);
+  height: 450px;
+  width: 400px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.second-place {
+  background-color: silver;
+  height: 350px;
+  width: 300px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.third-place {
+  background-color: #dbaf83;
+  height: 250px;
+  width: 200px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+
 .logo-container {
   padding: 20px;
 }
