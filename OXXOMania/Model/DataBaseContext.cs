@@ -99,7 +99,7 @@ namespace OXXOMania.Model
                 using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
                 {
                     conexion.Open();
-                    string query = "select p.id_usuario, u.nombre, u.apellido, u.monedas, p.puntaje, p.tiempo_jugado, p.id_videojuego from partida p inner join usuario u on p.id_usuario = u.id_usuario order by p.puntaje desc";
+                    string query = "call showPodium;";
 
                     MySqlCommand cmd = new MySqlCommand(query, conexion);
 
@@ -113,9 +113,8 @@ namespace OXXOMania.Model
                                 nombre = reader["nombre"].ToString(),
                                 apellido = reader["apellido"].ToString(),
                                 monedas = Convert.ToInt32(reader["monedas"]),
-                                puntaje = Convert.ToInt32(reader["puntaje"]),
-                                tiempo_jugado = Convert.ToInt32(reader["tiempo_jugado"]),
-                                id_videojuego = Convert.ToInt32(reader["id_videojuego"])
+                                score = Convert.ToInt32(reader["score"]),
+                                cabeza = Convert.ToInt32(reader["id_objeto"])
                             };
 
                             listaUsuarios.Add(u);

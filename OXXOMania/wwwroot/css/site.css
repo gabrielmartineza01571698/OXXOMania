@@ -4,6 +4,22 @@ body {
   display: flex;
 }
 
+.score-text{
+  font-size: 20px;
+  font-weight: bold;
+  color: #b45f27;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-text{
+  font-size: 20px;
+  border-bottom: 1px solid #c2c2c2;
+}
+
+.table-header{
+  font-size: 22px;
+}
 .sidebar {
   position: fixed;
   width: 240px;

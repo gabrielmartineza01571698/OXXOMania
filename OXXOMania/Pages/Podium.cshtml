@@ -3,37 +3,53 @@
 @{
     ViewData["Title"] = "Podium";
     Layout = "_Layout";
+    
+
+    string avatarHead = "~/images/objetos/f_1.png"; // Default
+    var headOptions = new Dictionary<int, string>()
+    {
+        {6, "~/images/objetos/f_1.png"},
+        {7, "~/images/objetos/f_2.png"},
+        {8, "~/images/objetos/f_3.png"},
+        {9, "~/images/objetos/f_4.png"}
+    };
 }
 
 <div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px; padding-top: 50px;">
     <div class="row border rounded-5 shadow justify-content-center p-4 bg-white w-100">
         <h2 class="text-center mb-4">🏆 Podio de Usuarios</h2>
 
-        <table class="table table-hover text-center">
+        <table class="text-center">
             <thead class="thead-light">
-                <tr>
-                    <th>Posición</th>
+                <tr class="table-header">
+                    <th></th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Monedas</th>
                     <th>Puntaje</th>
-                    <th>Tiempo Jugado</th>
+                    <th>Posición</th>
                 </tr>
             </thead>
             <tbody>
                 
-                @for (int i = 3; i < @Model.ListaUsuarios.Count; i++)
-                {
-                    var usuario = @Model.ListaUsuarios[i];
-                    <tr class="@(i == 0)">
-                        <td>@(i + 1)</td>
-                        <td>@usuario.nombre</td>
-                        <td>@usuario.apellido</td>
-                        <td>@usuario.monedas</td>
-                        <td>@usuario.puntaje</td>
-                        <td>@usuario.tiempo_jugado</td>
-                    </tr>
-                }
+                @for (int i = 0; i < Model.ListaUsuarios.Count; i++)
+                    {
+                        var usuario = Model.ListaUsuarios[i];
+
+                       string avatarPath = Url.Content(headOptions[usuario.cabeza]);
+
+                        <tr class="table-text">
+                            <td>
+                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
+                            </td>
+                            <td class="align-middle">@usuario.nombre</td>
+                            <td class="align-middle">@usuario.apellido</td>
+                            <td class="align-middle">@usuario.monedas</td>
+                            <td class="score-text">@usuario.score</td>
+                            <td class="align-middle" style="font-weight: bold;">#@(i+1)</td>
+                        </tr>
+                    }
+
             </tbody>
         </table>
     </div>
