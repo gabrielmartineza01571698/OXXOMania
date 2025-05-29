@@ -15,90 +15,95 @@
     };
 }
 
-<div style="padding-left: 240px; padding-top: 100px;">
-  <div class="grid-podium">
-      <div class="second-place">
-        <td>
-            <img src="@Model.AvatarPath2" height="150px" style="margin-top: 30px;" />
-        </td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[1].nombre</td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[1].apellido</td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[1].score</td>
-        <br/>
-        <td class="score-text">@Model.ListaUsuarios[1].monedas</td>
-      </div>
-      
-      <div class="first-place">
+<div style="padding-top: 80px; padding-left: 240px; padding-bottom: 50px;">
+    <div class="grid-podium" style="padding-bottom: 50px;">
+    <!-- SECOND PLACE -->
+    <div class="podium-container">
+        <div class="user-display">
         
-        <td>
-            <img src="@Model.AvatarPath1" height="200px" style="margin-top: 30px;" />
-        </td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[0].nombre</td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[0].apellido</td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[0].score</td>
-        <br/>
-        <td class="score-text">@Model.ListaUsuarios[0].monedas</td>
-      </div>
-      
-      <div class="third-place">
-        <td>
-            <img src="@Model.AvatarPath3" height="100px" style="margin-top: 30px;" />
-        </td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[2].nombre</td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[2].apellido</td>
-        <br/>
-        <td class="align-middle">@Model.ListaUsuarios[2].score</td>
-        <br/>
-        <td class="score-text">@Model.ListaUsuarios[2].monedas</td>
-      </div>
-  </div>
-</div>
+        <div style="height: 60px; overflow: hidden;">
+            <img src="@Model.AvatarPath3" height="100px" style="clip-path: inset(0% 0% 40% 0%);" />
+        </div>
+        <div style="font-weight: bold;">@Model.ListaUsuarios[1].nombre</div>
+        <div style="font-weight: bold;">@Model.ListaUsuarios[1].apellido</div>
+        <div class="score-text">@Model.ListaUsuarios[1].score</div>
+        </div>
+        <div class="second-place">
+            <div class="medal-display" style="font-size: 80px;">🥈</div>
+        </div>
+    </div>
+
+    <div class="podium-container">
+        <div class="user-display">
+        
+        <div style="height: 60px; overflow: hidden;">
+            <img src="@Model.AvatarPath1" height="100px" style="clip-path: inset(0% 0% 40% 0%);" />
+        </div>
+        <div style="font-weight: bold;">@Model.ListaUsuarios[0].nombre</div>
+        <div style="font-weight: bold;">@Model.ListaUsuarios[0].apellido</div>
+        <div class="score-text">@Model.ListaUsuarios[0].score</div>
+        </div>
+        <div class="first-place">
+            <div class="medal-display" style="font-size: 80px;">🥇</div>
+        </div>
+    </div>
+
+    <div class="podium-container">
+        <div class="user-display">
+        
+        <div style="height: 60px; overflow: hidden;">
+            <img src="@Model.AvatarPath3" height="100px" style="clip-path: inset(0% 0% 40% 0%);" />
+        </div>
+        <div style="font-weight: bold;">@Model.ListaUsuarios[2].nombre</div>
+        <div style="font-weight: bold;">@Model.ListaUsuarios[2].apellido</div>
+        <div class="score-text">@Model.ListaUsuarios[2].score</div>
+        </div>
+        <div class="third-place">
+            <div class="medal-display" style="font-size: 80px;">🥉</div>
+        </div>
+        
+    </div>
+    </div>
 
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 240px; padding-top: 10px;">
-    <div class="row border rounded-5 shadow justify-content-center p-4 bg-white w-100">
-        <h2 class="text-center mb-4">🏆 Podio de Usuarios</h2>
 
-        <table class="text-center">
-            <thead class="thead-light">
-                <tr class="table-header">
-                    <th></th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Monedas</th>
-                    <th>Puntaje</th>
-                    <th>Posición</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                @for (int i = 3; i < Model.ListaUsuarios.Count; i++)
-                    {
-                        var usuario = Model.ListaUsuarios[i];
 
-                        string avatarPath = Url.Content(headOptions[usuario.cabeza]);
 
-                        <tr class="table-text">
-                            <td>
-                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
-                            </td>
-                            <td class="align-middle">@usuario.nombre</td>
-                            <td class="align-middle">@usuario.apellido</td>
-                            <td class="align-middle">@usuario.monedas</td>
-                            <td class="score-text">@usuario.score</td>
-                            <td class="align-middle" style="font-weight: bold;">#@(i+1)</td>
-                        </tr>
-                    }
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="row border rounded-5 shadow justify-content-center p-4 bg-white w-100">
+            <h2 class="text-center mb-4">🏆 Podio de Usuarios</h2>
 
-            </tbody>
-        </table>
+            <table class="text-center">
+                <thead class="thead-light">
+                    <tr class="table-header">
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Puntaje</th>
+                        <th>Posición</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @for (int i = 3; i < Model.ListaUsuarios.Count; i++)
+                        {
+                            var usuario = Model.ListaUsuarios[i];
+
+                            string avatarPath = Url.Content(headOptions[usuario.cabeza]);
+
+                            <tr class="table-text">
+                                <td>
+                                    <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
+                                </td>
+                                <td class="align-middle">@usuario.nombre</td>
+                                <td class="align-middle">@usuario.apellido</td>
+                                <td class="score-text">@usuario.score</td>
+                                <td class="align-middle" style="font-weight: bold;">#@(i+1)</td>
+                            </tr>
+                        }
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

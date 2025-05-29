@@ -1,8 +1,16 @@
 @page
-@model VistaAsesor
+@using System.Text.Json
+@using OXXOMania.Model
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@model VistaAsesorModel
 @{
     ViewData["Title"] = "VistaAsesor";
     Layout = "_Layout";
+
+    var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
+    Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
+
     string avatarHead = "~/images/objetos/f_1.png"; // Default
     var headOptions = new Dictionary<int, string>()
     {
@@ -11,9 +19,13 @@
         {8, "~/images/objetos/f_3.png"},
         {9, "~/images/objetos/f_4.png"}
     };
+    
+  
+
 }
 
 <div class="content-wrapper" style="padding-left: 240px;">
+
     <section class= "dashboard-top-sec">
         <div class="container-fluid">
             <div class=" row">
@@ -68,36 +80,36 @@
                     <div class="col-lg-4">
                         <div class="lider-list">
                             <h5 class="lider-sc-title">tus lideres: </h5>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Sucursal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <th scope="row">1</th>
-                                    <td>Maria</td>
-                                    <td>Leambre</td>
-                                    <td>MTY zona tec</td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">2</th>
-                                    <td>Luis</td>
-                                    <td>Rodriguez</td>
-                                    <td>GDJ zona centro</td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">3</th>
-                                    <td>Juan</td>
-                                    <td>De la Fuente</td>
-                                    <td>MTY Barrio Antiguo</td>
-                                    </tr>
-                                </tbody>
-                                </table>
+                            <table class="text-center">
+            <thead class="thead-light">
+                <tr class="table-header">
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Sucursal</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @for (int i = 0; i < Model.listaLideres.Count; i++)
+                    {
+                        var usuario = Model.listaLideres[i];
+
+                       string avatarPath = Url.Content(headOptions[usuario.foto]);
+
+                        <tr class="table-text">
+                            <td>
+                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
+                            </td>
+                            <td class="align-middle">@usuario.nombre</td>
+                            <td class="align-middle">@usuario.apellido</td>
+                            <td class="align-middle">@usuario.sucursal</td>
+                            <td class="align-middle" style="font-weight: bold;">#@(i+1)</td>
+                        </tr>
+                    }
+
+            </tbody>
+        </table>
                         </div>
                     </div>
 

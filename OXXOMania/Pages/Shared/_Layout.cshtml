@@ -45,16 +45,17 @@
         <div class="logo-container">
             <img src="https://1000marcas.net/wp-content/uploads/2022/02/OXXO-Logo.png" alt="OXXO Logo" class="logo" />
         </div>
+        
         <nav>
             <ul class="nav-list">
-                <li class="nav-item @(Context.Request.Path == "/Index" ? "selected" : "")"><a asp-page="/Index"><i class="fa fa-home"></i> Inicio</a></li>
-                <li class="nav-item @(Context.Request.Path == "/Puntajes" ? "selected" : "")"><a asp-page="/Podium"><i class="fa fa-chart-bar"></i> Podium</a></li>
+                <li class="nav-item @(Context.Request.Path == "/Puntajes" ? "selected" : "")"><a asp-page="/Podium"><i class="fa fa-chart-bar"></i> Podio</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Perfil" ? "selected" : "")"><a asp-page="/Personalizacion"><i class="fa fa-user"></i> Mi perfil</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Juego" ? "selected" : "")"><a asp-page="/Juego"><i class="fa fa-gamepad"></i> Juego</a></li>
                 @if (usr.id_asesor == 0)
                     {
-                        <li class="nav-item @(Context.Request.Path == "/VistaAsesor" ? "selected" : "")"><a asp-page="/VistaAsesor"><i class="fa fa-cog"></i> VistaAsesor </a></li>
+                        <li class="nav-item @(Context.Request.Path == "/VistaAsesor" ? "selected" : "")"><a asp-page="/VistaAsesor"><i class="fa fa-cog"></i> Vista Asesor </a></li>
                     }
+                <li class="nav-item @(Context.Request.Path == "/Index" ? "selected" : "")"><a asp-page="/Index"><i class="fa fa-home"></i> Salir de sesión</search></del></a></li>
             </ul>
         </nav>
     </div>
@@ -63,16 +64,20 @@
         @RenderBody()
     </div>
 
-    <div class="topbar">
+    <div class="topbar d-flex align-items-center justify-content-between" style="padding-left: 240px; padding-right: 30px;">
         <div class="toptext">
-            <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")">
-                <a class="toptext" asp-page="/Personalizacion">
+            OXXOMANIA
+        </div>
+        <div class="topusuario">
+            <li class="nav-user @(Context.Request.Path == "/Perfil" ? "selected" : "")" style="list-style: none;">
+                <a class="topusuario" asp-page="/Personalizacion" style="display: flex; align-items: center; gap: 10px;">
                     <img src="@avatarHead" height="70px" style="margin-top: 30px;" />
                     @usr.nombre
                 </a>
             </li>
         </div>
     </div>
+
 
     @RenderSection("Scripts", required: false)
 </body>
