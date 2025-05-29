@@ -291,6 +291,8 @@ body {
   line-height: 20px;
   text-align: center;
   padding-top: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* sombra ligera */
+
 }
 
 .last-month h5 {
@@ -313,5 +315,9 @@ body {
 }
 
 .col-lg-4 {
+  background-color: white;
+}
+
+.col-lg-4{
   background-color: white;
 }

@@ -88,5 +88,8 @@ namespace OXXOMania.Model
             conexion.Close();
             return cabeza;
         }
+
+        //vista de asesor
+        
     }
 }
