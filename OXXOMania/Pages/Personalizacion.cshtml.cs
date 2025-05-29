@@ -43,8 +43,8 @@ namespace OXXOMania.Pages
             connection.Open();
 
             string desactivarQuery = @"
-                UPDATE Tenencia t
-                JOIN Objeto o ON t.id_objeto = o.id_objeto
+                UPDATE tenencia t
+                JOIN objeto o ON t.id_objeto = o.id_objeto
                 SET t.equipado = 0
                 WHERE t.id_usuario = @usuarioId AND o.tipo = @tipo;
             ";
@@ -56,7 +56,7 @@ namespace OXXOMania.Pages
                 cmd1.ExecuteNonQuery();
             }
 
-            string activarQuery = "UPDATE Tenencia SET equipado = 1 WHERE id_usuario = @usuarioId AND id_objeto = @idObjeto;";
+            string activarQuery = "UPDATE tenencia SET equipado = 1 WHERE id_usuario = @usuarioId AND id_objeto = @idObjeto;";
             using (var cmd2 = new MySqlCommand(activarQuery, connection))
             {
                 cmd2.Parameters.AddWithValue("@usuarioId", UsuarioId);
@@ -74,8 +74,8 @@ namespace OXXOMania.Pages
 
             string query = @"
                 SELECT o.id_objeto, o.nombre, o.tipo, o.precio, o.descripcion, o.imagen, t.equipado
-                FROM Tenencia t
-                JOIN Objeto o ON t.id_objeto = o.id_objeto
+                FROM tenencia t
+                JOIN objeto o ON t.id_objeto = o.id_objeto
                 WHERE t.id_usuario = @usuarioId AND t.comprado = 1
             ";
 

@@ -1,25 +1,65 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using OXXOMania.Model;
+using System.Text.Json;
 
 namespace OXXOMania.Pages;
 
 public class Index_CrearCuentaModel : PageModel
 {
     [BindProperty]
-    public string? nombre {get; set;}
+    [Required(ErrorMessage = "El nombre es obligatorio")]
+    public string? nombre { get; set; }
     [BindProperty]
-    public int? apellido {get; set;}
+    [Required(ErrorMessage = "El apellido es obligatorio")]
+    public string? apellido { get; set; }
+    //[BindProperty]
+    //public string? correo { get; set; }
     [BindProperty]
-    public string? correo {get; set;}
+    [Required(ErrorMessage = "El usuario es obligatorio")]
+    public string? user { get; set; }
     [BindProperty]
-    public int? user {get; set;}
+    [Required(ErrorMessage = "La sucursal es obligatoria")]
+    public string? sucursal { get; set; }
     [BindProperty]
-    public int? sucursal {get; set;}
-    [BindProperty]
-    public int? password {get; set;}
+    [Required(ErrorMessage = "La contraseña es obligatoria")]
+    public string? password { get; set; }
+
+    public Usuario usr { get; set; }
+
+    private readonly DataBaseContext _context;
+    public Index_CrearCuentaModel(DataBaseContext context)
+    {
+        _context = context;
+    }
 
     public void OnGet()
     {
+
+    }
+
+    public IActionResult OnPost()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+
+        usr = _context.GetUsuarioLogin(user);
+
+        if (usr.usuario != "")
+        {
+            ModelState.AddModelError("user", "El usuario ya tiene una cuenta existente.");
+            return Page();
+        }
+        else
+        {
+            _context.AgregarUsuario(nombre, apellido, user, sucursal, password);
+            return RedirectToPage("/Index");
+            //agregar mensaje de su usuario se ha creado con exito porfavor ingrese sesion
+        }
+
 
     }
 }

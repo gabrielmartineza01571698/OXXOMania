@@ -1,33 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
 using OXXOMania.Model;
+using System.Collections.Generic;
 
 namespace OXXOMania.Pages
 {
-    public class Podium : PageModel
+    public class PodiumModel : PageModel
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor lectorSesion;
+        private readonly DataBaseContext db;
 
-        public Podium(IHttpContextAccessor httpContextAccessor)
+        public PodiumModel(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContextAccessor = httpContextAccessor;
+            lectorSesion = httpContextAccessor;
+            db = new DataBaseContext(); // o mejor: inyectar vía constructor si usas DI
         }
 
         public string? NombreUsuario { get; set; }
+        public List<PodiumUsuario> ListaUsuarios { get; set; } = new List<PodiumUsuario>();
 
         public void OnGet()
         {
-            var jsonUsr = _httpContextAccessor.HttpContext?.Session.GetString("Usr");
-
-            if (!string.IsNullOrEmpty(jsonUsr))
-            {
-                Usuario usr = JsonSerializer.Deserialize<Usuario>(jsonUsr);
-                NombreUsuario = usr.nombre;
-            }
-
-            // Aquí podrías cargar los datos del podio desde base de datos o lógica de negocio
+            ListaUsuarios = db.AgarrarLugares();
         }
     }
 }
