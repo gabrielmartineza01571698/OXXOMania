@@ -91,38 +91,100 @@ namespace OXXOMania.Model
             return cabeza;
         }
 
-
         public List<PodiumUsuario> AgarrarLugares()
+        {
+            List<PodiumUsuario> listaUsuarios = new List<PodiumUsuario>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
             {
-                List<PodiumUsuario> listaUsuarios = new List<PodiumUsuario>();
+                conexion.Open();
 
-                using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+                MySqlCommand cmd = new MySqlCommand("call showPodium;", conexion);
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    conexion.Open();
-                    string query = "call showPodium;";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conexion);
-
-                    using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        PodiumUsuario u = new PodiumUsuario
                         {
-                            PodiumUsuario u = new PodiumUsuario
-                            {
-                                id_usuario = Convert.ToInt32(reader["id_usuario"]),
-                                nombre = reader["nombre"].ToString(),
-                                apellido = reader["apellido"].ToString(),
-                                monedas = Convert.ToInt32(reader["monedas"]),
-                                score = Convert.ToInt32(reader["score"]),
-                                cabeza = Convert.ToInt32(reader["id_objeto"])
-                            };
+                            id_usuario = Convert.ToInt32(reader["id_usuario"]),
+                            nombre = reader["nombre"].ToString(),
+                            apellido = reader["apellido"].ToString(),
+                            monedas = Convert.ToInt32(reader["monedas"]),
+                            score = Convert.ToInt32(reader["score"]),
+                            cabeza = Convert.ToInt32(reader["id_objeto"])
+                        };
 
-                            listaUsuarios.Add(u);
-                        }
+                        listaUsuarios.Add(u);
                     }
                 }
-
-                return listaUsuarios;
             }
+
+            return listaUsuarios;
+        }
+
+
+        public List<Empleado> AgarrarHorarios(int id_lider)
+        {
+            List<Empleado> listaEmpleados = new List<Empleado>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand("call MostrarEmpleadosPorLider(@id_lider);", conexion);
+                cmd.Parameters.AddWithValue("@id_lider", id_lider);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Empleado e = new Empleado
+                        {
+                            nombre_empleado = reader["nombre_empleado"].ToString(),
+                            apellido_empleado = reader["apellido_empleado"].ToString(),
+                            horario_entrada = reader.GetTimeSpan(reader.GetOrdinal("horario_entrada")),
+                            horario_salida = reader.GetTimeSpan(reader.GetOrdinal("horario_salida")),
+                            dias_trabajo = reader["dias_trabajo"].ToString(),
+                        };
+
+                        listaEmpleados.Add(e);
+                    }
+                }
+            }
+
+            return listaEmpleados;
+        }
+            
+        public List<LideresAsesor> AgarrarLideresdeAsesor(int id_asesor)
+        {
+            List<LideresAsesor> listaLideres = new List<LideresAsesor>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+
+                MySqlCommand cmd = new MySqlCommand("call LideresPorAsesor(@idAsesor);", conexion);
+                cmd.Parameters.AddWithValue("@idAsesor", id_asesor);
+
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        LideresAsesor u = new LideresAsesor
+                        {
+                            nombre = reader["nombre"].ToString(),
+                            apellido = reader["apellido"].ToString(),
+                            sucursal = reader["sucursal"].ToString(),
+                            foto = Convert.ToInt32(reader["id_objeto"])
+                        };
+
+                        listaLideres.Add(u);
+                    }
+                }
+            }
+
+            return listaLideres;
+        }
     }
 }

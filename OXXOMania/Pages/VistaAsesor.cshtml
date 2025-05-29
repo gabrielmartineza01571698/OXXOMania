@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "VistaAsesor";
     Layout = "_Layout";
+    string avatarHead = "~/images/objetos/f_1.png"; // Default
+    var headOptions = new Dictionary<int, string>()
+    {
+        {6, "~/images/objetos/f_1.png"},
+        {7, "~/images/objetos/f_2.png"},
+        {8, "~/images/objetos/f_3.png"},
+        {9, "~/images/objetos/f_4.png"}
+    };
 }
 
 <div class="content-wrapper" style="padding-left: 240px;">
