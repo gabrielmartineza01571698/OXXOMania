@@ -452,3 +452,7 @@ body {
   padding-left: 200px;
   padding-right: 300px;
 }
+
+.border-podium{
+      border: rgb(255, 208, 0) 5px solid!important;
+}

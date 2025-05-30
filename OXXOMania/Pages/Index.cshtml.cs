@@ -59,7 +59,6 @@ public class IndexModel : PageModel
 
         if (usr.usuario == "")
         {
-            //si no existe regresa "" entonces manda mensaje aqui de "usuario no existe"
             ModelState.AddModelError("user", "El usuario no existe");
             return Page();
         }
@@ -67,7 +66,7 @@ public class IndexModel : PageModel
         {
             if (usr.contraseña == password)
             {
-                //usuario y contraseña correctos entrar a homepage
+                
                 HttpContext.Session.Remove($"Intentos_{user}");
                 HttpContext.Session.Remove($"Bloqueado_{user}");
 
@@ -76,7 +75,7 @@ public class IndexModel : PageModel
             }
             else
             {
-                //password no coincide con usuario mandar mensaje "password incorrecto"
+                
                 intentosFallidos++;
                 HttpContext.Session.SetInt32($"Intentos_{user}", intentosFallidos);
 

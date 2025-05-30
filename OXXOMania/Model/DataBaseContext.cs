@@ -18,13 +18,17 @@ namespace OXXOMania.Model
             return new MySqlConnection(ConnectionString);
         }
 
+
         // Karla
-        public Usuario GetUsuarioLogin(string usr) 
+
+        public Usuario GetUsuarioLogin(string usr)
         {
             Usuario myUsuario = new Usuario();
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("Select * from usuario where usuario = @usr", conexion); 
+
+
+            MySqlCommand cmd = new MySqlCommand("call GetUsuarioExistente(@usr)", conexion);
             cmd.Parameters.AddWithValue("@usr", usr);
 
             using (var reader = cmd.ExecuteReader())
@@ -34,7 +38,6 @@ namespace OXXOMania.Model
                     myUsuario.id_usuario = Convert.ToInt32(reader["id_usuario"]);
                     myUsuario.nombre = reader["nombre"].ToString();
                     myUsuario.apellido = reader["apellido"].ToString();
-                    myUsuario.correo = reader["correo"].ToString();
                     myUsuario.usuario = reader["usuario"].ToString();
                     myUsuario.contraseña = reader["contraseña"].ToString();
                     myUsuario.monedas = Convert.ToInt32(reader["monedas"]);
@@ -51,14 +54,14 @@ namespace OXXOMania.Model
             conexion.Close();
             return myUsuario;
         }
-        public void AgregarUsuario(string nombre, string apellido, string user, string sucursal, string password) 
+
+        public void AgregarUsuario(string nombre, string apellido, string user, string sucursal, string password)
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO `usuario` (nombre,apellido,usuario,sucursal,contraseña,monedas,score) VALUES (@nombre, @apellido, @user, @sucursal, @password,0,0)", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("call CrearUsuario(@nombre, @apellido, @user, @sucursal, @password)", conexion);
             cmd.Parameters.AddWithValue("@nombre", nombre);
             cmd.Parameters.AddWithValue("@apellido", apellido);
-            //cmd.Parameters.AddWithValue("@correo", correo);
             cmd.Parameters.AddWithValue("@user", user);
             cmd.Parameters.AddWithValue("@sucursal", sucursal);
             cmd.Parameters.AddWithValue("@password", password);
