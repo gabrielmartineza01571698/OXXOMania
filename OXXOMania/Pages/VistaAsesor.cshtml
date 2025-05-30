@@ -11,7 +11,7 @@
     var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
     Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
 
-    string avatarHead = "~/images/objetos/f_1.png"; // Default
+    string avatarHead = "~/images/objetos/f_1.png"; 
     var headOptions = new Dictionary<int, string>()
     {
         {6, "~/images/objetos/f_1.png"},
@@ -153,4 +153,3 @@
         </table>
     </div>
 </div>
-
