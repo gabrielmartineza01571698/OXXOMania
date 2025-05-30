@@ -385,22 +385,17 @@ body {
 
 
 
-.last-month {
+.puntajes {
   line-height: 20px;
   text-align: center;
   padding-top: 30px;
 
 }
 
-.last-month h5 {
-  font-size: 20px;
-  font-weight: 600;
-}
 
-.last-month p {
-  font-size: 15px;
+.puntajes p {
+  font-size: 17px;
   color: #ad7a03;
-  font-weight: bold;
 }
 
 .ganancia {
