@@ -18,12 +18,13 @@ namespace OXXOMania.Model
             return new MySqlConnection(ConnectionString);
         }
 
-        public Usuario GetUsuarioLogin(string usr) //solo recibe un usuario
+        // Karla
+        public Usuario GetUsuarioLogin(string usr) 
         {
             Usuario myUsuario = new Usuario();
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("Select * from usuario where usuario = @usr", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("Select * from usuario where usuario = @usr", conexion); 
             cmd.Parameters.AddWithValue("@usr", usr);
 
             using (var reader = cmd.ExecuteReader())
@@ -50,7 +51,7 @@ namespace OXXOMania.Model
             conexion.Close();
             return myUsuario;
         }
-        public void AgregarUsuario(string nombre, string apellido, string user, string sucursal, string password) //solo recibe un usuario
+        public void AgregarUsuario(string nombre, string apellido, string user, string sucursal, string password) 
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
@@ -65,14 +66,14 @@ namespace OXXOMania.Model
             cmd.ExecuteNonQuery();
 
             conexion.Close();
-            //creo q le falta
         }
 
-        public int AgarrarCabeza(int id_usuario) //solo recibe un usuario
+        // Podium (Kevin)
+        public int AgarrarCabeza(int id_usuario) 
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("call agarrarCabeza(@id);", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("call agarrarCabeza(@id);", conexion); 
             cmd.Parameters.AddWithValue("@id", id_usuario);
             int cabeza = 0;
             using (var reader = cmd.ExecuteReader())
@@ -123,6 +124,7 @@ namespace OXXOMania.Model
             return listaUsuarios;
         }
 
+       //Vista Asesor (Mari)
 
         public List<Empleado> AgarrarHorarios(int id_lider)
         {
