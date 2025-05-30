@@ -347,7 +347,7 @@ body {
 
 .div-cc {
   width: 960px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   padding: 60px 70px;
   margin: 100px 0px;
 }
@@ -368,6 +368,7 @@ body {
   margin-top: 65px;
   transition: .5s;
   vertical-align: middle;
+  align-items: center;
 }
 
 .content-wrapper.hide {
@@ -375,16 +376,19 @@ body {
 }
 
 .top-chart-ganancia{
-  border-radius: 5px;
+  border-radius: 30px;
+  width: 660;
   padding-top: 15px;
-  box-shadow: -2px 3px 13px 0px #66666621;
+  background-color: white;
+  border: rgb(255, 208, 0) 5px solid;
 }
+
+
 
 .last-month {
   line-height: 20px;
   text-align: center;
   padding-top: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* sombra ligera */
 
 }
 
@@ -394,8 +398,9 @@ body {
 }
 
 .last-month p {
-  font-size: 12px;
+  font-size: 15px;
   color: #ad7a03;
+  font-weight: bold;
 }
 
 .ganancia {
@@ -408,9 +413,47 @@ body {
 }
 
 .col-lg-4 {
+  border-radius: 30px;
   background-color: white;
+  border: rgb(255, 208, 0) 5px solid;
+  width: 400px;
 }
 
 .col-lg-4{
   background-color: white;
+}
+
+.lider-list, .horarios-container {
+  margin-top: 40px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.col-right-no-gap {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.aportaciones{
+  align-items: center;
+  vertical-align: middle;
+}
+
+.lider-list{
+  border-radius: 30px;
+  background-color: white;
+  border: rgb(255, 208, 0) 5px solid;
+  padding-left: 200px;
+  padding-right: 300px;
+}
+
+.horarios-container{
+  border-radius: 30px;
+  background-color: white;
+  border: rgb(255, 208, 0) 5px solid;
+  padding-left: 200px;
+  padding-right: 300px;
 }

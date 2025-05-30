@@ -21,55 +21,51 @@
     };
 }
 
-<div class="content-wrapper" style="padding-left: 240px;">
-    <section class="dashboard-top-sec" style="padding-top: 80px; padding-left: 20px; padding-right: 20px; padding-bottom: 60px;">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="bg-white top-chart-earn">
-                        <div class="row">
-                            <div class="col-sm-4 my-2 pe-0">
-                                <div class="last-month">
-                                    <h5>Dashboard</h5>
-                                    <p>Ganancias del Mes pasado</p>
-                                    <div class="ganancia">
-                                        <h2>$510,327,112.28</h2> </br>
-                                        <p>Ganancias de Este Mes</p>
-                                        <h2>$243,938,173.69</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-8 my-2 ps-0">
-                                <div class="widget-content">
-                                    <iframe width="400" height="300" src="https://lookerstudio.google.com/embed/reporting/389a889c-cf79-4e5f-a2d2-0f52821a9f98/page/YzpLF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-                                </div>
-                            </div>
+<div class="content-wrapper" style="padding-left: 250px;"> 
+    <section class="dashboard-top-sec mx-auto" style="padding: 20px;">
+    <div class="row justify-content-center gx-4 gy-3">
+        <div class="col-lg-7">
+            <div class="top-chart-ganancia">
+                <div class="row gx-0">
+                    <div class="col-sm-4 my-2">
+                        <div class="last-month">
+                            <h5>Puntajes</h5>
+                            <p>Monedas y Puntos SPIN</p>
+                        
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4">
-                <div class="bg-white-top-chart-earn" style="padding-left: 20px;">
-                    <div class="aportaciones">
-                        <div class="aportaciones-title">
-                            <h5>Aportaciones</h5>
+                    <div class="col-sm-8 my-2">
+                        <div class="widget-content">
+                            <iframe style="width: 95%; height: 300px; border: 0;" 
+                                    src="https://lookerstudio.google.com/embed/reporting/389a889c-cf79-4e5f-a2d2-0f52821a9f98/page/YzpLF"
+                                    frameborder="0" allowfullscreen
+                                    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
                         </div>
-                          <div id="chart-2">
-                                <div class="widget-content">
-                                <iframe width="380" height="280" src="https://lookerstudio.google.com/embed/reporting/812b1d47-f541-49ab-8853-9a69609edf12/page/YzpLF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-                                </div>
-                            </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="top-chart-earn">
+                <div class="aportaciones text-center">
+                    <h5>Aportaciones</h5>
+                    <div id="chart-2" class="widget-content">
+                        <iframe style="width: 100%; height: 280px; border: 0;" 
+                                src="https://lookerstudio.google.com/embed/reporting/812b1d47-f541-49ab-8853-9a69609edf12/page/YzpLF"
+                                frameborder="0" allowfullscreen
+                                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </section>
 
-    <div class="lider-list">
-        <h5 class="lider-sc-title">tus lideres: </h5>
-            <table class="text-center">
+
+    <div class="lider-list mx-auto" style="padding: 20px; width: 90%;">
+        <h5 class="lider-title" style="text-align: center; font-size: 30px; font-weight: 600;">Tus Líderes: </h5></br>
+            <table class="table w-100">
                 <thead class="thead-light">
                     <tr class="table-header">
                         <th></th>
@@ -97,7 +93,7 @@
                                     <form method="post" asp-page-handler="VerDetalle">
                                         <input type="hidden" name="id_usuario" value="@usuario.id_usuario" />
                                             <button type="submit" class="btn btn-primary lider-button" value="@usuario.id_usuario">
-                                            Ver Detalle
+                                            Filtrar Empleados
                                             </button>
                                     </form>
                                 </td>
@@ -107,8 +103,8 @@
             </table>
         </div>
 
-    <div class="horarios-container">
-        <table class="table">
+    <div class="horarios-container mx-auto" style="padding: 20px; width: 90%;">
+        <table class="table w-100">
             <thead>
                 <tr>
                     <th scope="col">Líder</th>
