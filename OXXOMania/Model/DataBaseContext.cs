@@ -120,7 +120,7 @@ namespace OXXOMania.Model
             return listaUsuarios;
         }
 
-
+    	// Vista Asesor (Mariangel)
         public List<Empleado> AgarrarHorarios(int id_lider)
         {
             List<Empleado> listaEmpleados = new List<Empleado>();
