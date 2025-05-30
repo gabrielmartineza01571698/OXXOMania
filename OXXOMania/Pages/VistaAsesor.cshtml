@@ -22,7 +22,7 @@
 }
 
 <div class="content-wrapper" style="padding-left: 240px;">
-    <section class="dashboard-top-sec">
+    <section class="dashboard-top-sec" style="padding-top: 80px; padding-left: 20px; padding-right: 20px; padding-bottom: 60px;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8">
@@ -50,110 +50,102 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="bg-white-top-chart-earn">
-                        <div class="aportaciones">
-                            <div class="aportaciones-title">
-                                <h5>Aportaciones</h5>
-                            </div>
-                            <div id="chart-2">
+                <div class="bg-white-top-chart-earn" style="padding-left: 20px;">
+                    <div class="aportaciones">
+                        <div class="aportaciones-title">
+                            <h5>Aportaciones</h5>
+                        </div>
+                          <div id="chart-2">
                                 <div class="widget-content">
-                                    <iframe width="380" height="280" src="https://lookerstudio.google.com/embed/reporting/812b1d47-f541-49ab-8853-9a69609edf12/page/YzpLF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                                <iframe width="380" height="280" src="https://lookerstudio.google.com/embed/reporting/812b1d47-f541-49ab-8853-9a69609edf12/page/YzpLF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
                                 </div>
                             </div>
-                        </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="dashboard-bottom-sec">
-        <div class="tus-lideres my-6">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="lider-list">
-                            <h5 class="lider-sc-title">tus lideres: </h5>
-                            <table class="text-center">
-                                <thead class="thead-light">
-                                    <tr class="table-header">
-                                        <th></th>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Sucursal</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (int i = 0; i < Model.listaLideres.Count; i++)
-                                    {
-                                        var usuario = Model.listaLideres[i];
-                                        string avatarPath = Url.Content(headOptions[usuario.foto]);
+    <div class="lider-list">
+        <h5 class="lider-sc-title">tus lideres: </h5>
+            <table class="text-center">
+                <thead class="thead-light">
+                    <tr class="table-header">
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Sucursal</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-                                        <tr class="table-text" data-id="@usuario.id_usuario" style="cursor:pointer;">
-                                            <td>
-                                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
-                                            </td>
-                                            <td class="align-middle">@usuario.nombre</td>
-                                            <td class="align-middle">@usuario.apellido</td>
-                                            <td class="align-middle">@usuario.sucursal</td>
-                                            <td class="align-middle">
-                                                <form method="post" asp-page-handler="VerDetalle">
-                                                    <input type="hidden" name="id_usuario" value="@usuario.id_usuario" />
-                                                    <button type="submit" class="btn btn-primary lider-button" value="@usuario.id_usuario">
-                                                        Ver Detalle
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <tbody>
+                    @for (int i = 0; i < Model.listaLideres.Count; i++)
+                    {
+                        var usuario = Model.listaLideres[i];
+                            string avatarPath = Url.Content(headOptions[usuario.foto]);
 
-                    <div class="col-lg-7">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Líder</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Horario Entrada</th>
-                                    <th scope="col">Horario Salida</th>
-                                    <th scope="col">Días</th>
+                            <tr class="table-text" data-id="@usuario.id_usuario" style="cursor:pointer;">
+                             <td>
+                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
+                             </td>
+                                <td class="align-middle">@usuario.nombre</td>
+                                <td class="align-middle">@usuario.apellido</td>
+                                <td class="align-middle">@usuario.sucursal</td>
+                                <td class="align-middle">
+                                    <form method="post" asp-page-handler="VerDetalle">
+                                        <input type="hidden" name="id_usuario" value="@usuario.id_usuario" />
+                                            <button type="submit" class="btn btn-primary lider-button" value="@usuario.id_usuario">
+                                            Ver Detalle
+                                            </button>
+                                    </form>
+                                </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.listaEmpleados != null && Model.listaEmpleados.Count > 0)
-                                {
-                                    @for (int i = 0; i < Model.listaEmpleados.Count; i++)
-                                    {
-                                        var empleado = Model.listaEmpleados[i];
-                                        <tr>
-                                            <td class="align-middle">@empleado.nombre_lider</td>
-                                            <td class="align-middle">@empleado.nombre_empleado</td>
-                                            <td class="align-middle">@empleado.apellido_empleado</td>
-                                            <td class="align-middle">@empleado.horario_entrada</td>
-                                            <td class="align-middle">@empleado.horario_salida</td>
-                                            <td class="align-middle">@empleado.dias_trabajo</td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="6" class="text-center">No hay empleados para mostrar</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
-    </section>
+
+    <div class="horarios-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Líder</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Horario Entrada</th>
+                    <th scope="col">Horario Salida</th>
+                    <th scope="col">Días</th>
+                </tr>
+            </thead>
+                <tbody>
+                    @if (Model.listaEmpleados != null && Model.listaEmpleados.Count > 0)
+                    {
+                        @for (int i = 0; i < Model.listaEmpleados.Count; i++)
+                        {
+                          var empleado = Model.listaEmpleados[i];
+                          <tr>
+                            <td class="align-middle">@empleado.nombre_lider</td>
+                            <td class="align-middle">@empleado.nombre_empleado</td>
+                            <td class="align-middle">@empleado.apellido_empleado</td>
+                            <td class="align-middle">@empleado.horario_entrada</td>
+                            <td class="align-middle">@empleado.horario_salida</td>
+                            <td class="align-middle">@empleado.dias_trabajo</td>
+                         </tr>
+                        }
+                    }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center">No hay empleados para mostrar</td>
+                            </tr>
+                        }
+                </tbody>
+        </table>
+    </div>
 </div>
+
 
 @section Scripts {
     <script>
