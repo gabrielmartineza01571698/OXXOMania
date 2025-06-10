@@ -11,86 +11,91 @@
     var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
     Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
 
-    string link = $"https://lookerstudio.google.com/embed/u/0/reporting/389a889c-cf79-4e5f-a2d2-0f52821a9f98/page/YzpLF?params=%7B%22asesor_param%22:{usr.id_usuario}%7D";
-    string link2 = $"https://lookerstudio.google.com/embed/reporting/812b1d47-f541-49ab-8853-9a69609edf12/page/YzpLF?params=%7B%22asesor_param%22:{usr.id_usuario}%7D";
+    string link1 = usr != null ? $"https://lookerstudio.google.com/embed/reporting/75a47701-15ed-4cbd-848b-c211e02ccd1e/page/K2XNF?params=%7B%22id_param%22%3A{usr.id_usuario}%7D" : "";
+    string link2 = usr != null ? $"https://lookerstudio.google.com/embed/reporting/4a7d10c5-d1a4-48cd-a4ee-6ff774ef4b6c/page/fGYNF?params=%7B%22id_param%22%3A{usr.id_usuario}%7D" : "";
+    string link3 = usr != null ? $"https://lookerstudio.google.com/embed/reporting/74548b85-0a2f-4001-abb0-44009fabc92c/page/lVaNF?params=%7B%22id_param%22%3A{usr.id_usuario}%7D" : "";
+    string link4 = $"https://lookerstudio.google.com/embed/reporting/402279b0-1881-4ceb-910b-d1d5aa79647c/page/3baNF";
+    string link5 = usr != null ? $"https://lookerstudio.google.com/embed/reporting/3d56dbba-0b3b-41ea-a22c-1313f1d32e3c/page/ucXNF?params=%7B%22id_param%22%3A{usr.id_usuario}%7D" : "";
+    string link6 = usr != null ? $"https://lookerstudio.google.com/embed/reporting/d3b15478-4adb-4fb7-a40b-3b79f58879f8/page/HFONF?params=%7B%22id_param%22%3A{usr.id_usuario}%7D" : "";
 }
-<div class="content-wrapper" style="padding-left: 250px; padding-bottom: 100px; padding-top: 50px">
-    <div class="row">
-    <div class="col-md-3 d-flex flex-column gap-3">
-        <div class="dashboard-card stat-card">
-            <iframe width="100%" height="150" src="https://lookerstudio.google.com/embed/reporting/75a47701-15ed-4cbd-848b-c211e02ccd1e/page/K2XNF" frameborder="0"></iframe>
-
-        </div>
-        <div class="dashboard-card stat-card">
-            <iframe width="250" height="150" src="https://lookerstudio.google.com/embed/reporting/4a7d10c5-d1a4-48cd-a4ee-6ff774ef4b6c/page/fGYNF" frameborder="0"></iframe>
-
-        </div>
-        <div class="dashboard-card stat-card">
-        <div class="dashboard-title">Reconocimientos Recibidos</div>
-            <iframe width="100%" height="150" src="https://lookerstudio.google.com/embed/reporting/74548b85-0a2f-4001-abb0-44009fabc92c/page/lVaNF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-        </div>
+@if (usr == null)
+{
+    <div class="alert alert-danger" role="alert">
+        No se encontró sesión activa. Por favor, inicia sesión.
     </div>
-
-    <div class="col-md-9 d-flex flex-column gap-4">
-        <div class="d-flex flex-wrap gap-4">
-            <div class="dashboard-card flex-grow-1" style="flex: 3; align-items: center; ">
-                <div class="dashboard-title">Monedas por Sucursal</div>
-                <iframe width="100%" height="300" src="https://lookerstudio.google.com/embed/reporting/402279b0-1881-4ceb-910b-d1d5aa79647c/page/3baNF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-            </div>
-            <div class="dashboard-card" style="flex: 1; min-width: 260px; align-items: center;">
-                <div class="dashboard-title">Puntos por Minuto</div>
-                    <iframe width="100%" height="300" src="https://lookerstudio.google.com/embed/reporting/3d56dbba-0b3b-41ea-a22c-1313f1d32e3c/page/ucXNF" frameborder="0"></iframe>           
+}
+else
+{
+    <div class="content-wrapper" style="padding-left: 250px; padding-bottom: 100px; padding-top: 50px">
+        <div class="row">
+            <div class="col-md-3 d-flex flex-column gap-3">
+                <div class="dashboard-card stat-card">
+                    <iframe width="100%" height="150" src="@Html.Raw(link1)" frameborder="0"></iframe>
                 </div>
-        </div>
+                <div class="dashboard-card stat-card">
+                    <iframe width="250" height="150" src="@Html.Raw(link2)" frameborder="0"></iframe>
+                </div>
+                <div class="dashboard-card stat-card">
+                    <div class="dashboard-title">Reconocimientos Recibidos</div>
+                    <iframe width="100%" height="150" src="@Html.Raw(link3)" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                </div>
+            </div>
 
-        <div class="d-flex flex-wrap gap-4">
-        <div class="dashboard-card flex-grow-1" style="flex: 3;">
-            <div class="dashboard-title">Horarios de tus Empleados</div>
-        <table class="table w-100">
-            <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Horario Entrada</th>
-                    <th scope="col">Horario Salida</th>
-                    <th scope="col">Días</th>
-                </tr>
-            </thead>
-                <tbody>
-                    @if (Model.listaEmpleados != null && Model.listaEmpleados.Count > 0)
-                    {
-                        @for (int i = 0; i < Model.listaEmpleados.Count; i++)
-                        {
-                          var empleado = Model.listaEmpleados[i];
-                          <tr>
-                            <td class="align-middle">@empleado.nombre_empleado</td>
-                            <td class="align-middle">@empleado.apellido_empleado</td>
-                            <td class="align-middle">@empleado.horario_entrada</td>
-                            <td class="align-middle">@empleado.horario_salida</td>
-                            <td class="align-middle">@empleado.dias_trabajo</td>
-                         </tr>
-                        }
-                    }
-                        else
-                        {
-                            <tr>
-                                <td colspan="6" class="text-center">No hay empleados para mostrar</td>
-                            </tr>
-                        }
-                </tbody>
-        </table>
-        </div>
+            <div class="col-md-9 d-flex flex-column gap-4">
+                <div class="d-flex flex-wrap gap-4">
+                    <div class="dashboard-card flex-grow-1" style="flex: 3; align-items: center;">
+                        <div class="dashboard-title">Monedas por Sucursal</div>
+                        <iframe width="100%" height="300" src="@Html.Raw(link4)" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                    </div>
+                    <div class="dashboard-card" style="flex: 1; min-width: 260px; align-items: center;">
+                        <div class="dashboard-title">Puntos por Minuto</div>
+                        <iframe width="100%" height="300" src="@Html.Raw(link5)" frameborder="0"></iframe>
+                    </div>
+                </div>
 
-        <div class="dashboard-card" style="flex: 1; min-width: 260px;">
-            <div class="dashboard-title">Monedas por Minijuego</div>
-            <iframe width="100%" height="250" 
-            src="https://lookerstudio.google.com/embed/reporting/d3b15478-4adb-4fb7-a40b-3b79f58879f8/page/HFONF" 
-            frameborder="0" style="border:0" 
-            allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-        </iframe>
-        </div>
+                <div class="d-flex flex-wrap gap-4">
+                    <div class="dashboard-card flex-grow-1" style="flex: 3;">
+                        <div class="dashboard-title">Horarios de tus Empleados</div>
+                        <table class="table w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Horario Entrada</th>
+                                    <th scope="col">Horario Salida</th>
+                                    <th scope="col">Días</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.listaEmpleados != null && Model.listaEmpleados.Count > 0)
+                                {
+                                    foreach (var empleado in Model.listaEmpleados)
+                                    {
+                                        <tr>
+                                            <td class="align-middle">@empleado.nombre_empleado</td>
+                                            <td class="align-middle">@empleado.apellido_empleado</td>
+                                            <td class="align-middle">@empleado.horario_entrada</td>
+                                            <td class="align-middle">@empleado.horario_salida</td>
+                                            <td class="align-middle">@empleado.dias_trabajo</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center">No hay empleados para mostrar</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="dashboard-card" style="flex: 1; min-width: 260px;">
+                        <div class="dashboard-title">Monedas por Minijuego</div>
+                        <iframe width="100%" height="250" src="@Html.Raw(link6)" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-
-</div>
+}

@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using OXXOMania.Model;
-using System; // Necesario para Exception
+using System;
+using System.Collections.Generic;
 
 namespace OXXOMania.Pages
 {
@@ -12,16 +12,15 @@ namespace OXXOMania.Pages
         private readonly IHttpContextAccessor lectorSesion;
         private readonly DataBaseContext db;
 
-        public DashboardLiderModel(IHttpContextAccessor httpContextAccessor)
+        public DashboardLiderModel(IHttpContextAccessor httpContextAccessor, DataBaseContext context)
         {
             lectorSesion = httpContextAccessor;
-            db = new DataBaseContext();
+            db = context;
         }
 
-        public int? id_lider { get; set; }
-        public List<Empleado> listaEmpleados { get; set; } = null;
+        public List<Empleado> listaEmpleados { get; set; }
 
-        public void OnGet(int id_usuario)
+        public void OnGet()
         {
             var jsonUsr = lectorSesion.HttpContext?.Session.GetString("Usr");
             if (!string.IsNullOrEmpty(jsonUsr))
@@ -31,18 +30,22 @@ namespace OXXOMania.Pages
                 {
                     try
                     {
-                        // Intenta obtener la lista de empleados desde la base de datos
-                        listaEmpleados = db.AgarrarHorarios(id_usuario);
+                        listaEmpleados = db.AgarrarHorarios(usr.id_usuario) ?? new List<Empleado>();
                     }
                     catch (Exception ex)
                     {
-                        // Aquí puedes registrar el error si tienes un sistema de logging
                         Console.WriteLine("Error al acceder a la base de datos: " + ex.Message);
-
-                        // Dejar listaEmpleados en null indica que falló la conexión a la BD
-                        listaEmpleados = null;
+                        listaEmpleados = new List<Empleado>();
                     }
                 }
+                else
+                {
+                    listaEmpleados = new List<Empleado>();
+                }
+            }
+            else
+            {
+                listaEmpleados = new List<Empleado>();
             }
         }
     }
