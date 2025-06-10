@@ -42,7 +42,6 @@ namespace OXXOMania.Pages
                         {
                             Console.WriteLine("Error al acceder a la base de datos: " + ex.Message);
 
-                            // Marcamos como nulas para que la vista sepa que hubo error
                             listaLideres = null;
                             listaEmpleados = null;
                         }
