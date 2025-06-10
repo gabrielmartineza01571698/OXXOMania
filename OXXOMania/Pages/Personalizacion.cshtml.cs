@@ -22,8 +22,6 @@ namespace OXXOMania.Pages
         }
 
         public List<ObjetoConEstado> ObjetosEquipables { get; set; } = new();
-
-        // ✅ AHORA se setea desde sesión
         public int UsuarioId { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -46,6 +44,8 @@ namespace OXXOMania.Pages
 
             CargarObjetos();
         }
+
+        
 
         public IActionResult OnPost()
         {
