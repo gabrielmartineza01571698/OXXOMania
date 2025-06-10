@@ -53,13 +53,13 @@
                 <li class="nav-item @(Context.Request.Path == "/Perfil" ? "selected" : "")"><a asp-page="/Personalizacion"><i class="fa fa-user"></i> Mi perfil</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Juego" ? "selected" : "")"><a asp-page="/Juego"><i class="fa fa-gamepad"></i> Juego</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Tienda" ? "selected" : "")"><a asp-page="/Tienda"><i class="fa fa-shopping-bag"></i> Tienda</a></li>
-                <li class="nav-item @(Context.Request.Path == "/Reconocimientos" ? "selected" : "")"><a asp-page="/Reconocimientos"><i class="fa fa-gamepad"></i> Reconocimientos</a></li>
+                <li class="nav-item @(Context.Request.Path == "/Reconocimientos" ? "selected" : "")"><a asp-page="/Reconocimientos"><i class="fa fa-certificate"></i> Reconocimientos</a></li>
 
                 @if (usr.id_asesor == 0)
                     {
                         <li class="nav-item @(Context.Request.Path == "/VistaAsesor" ? "selected" : "")"><a asp-page="/VistaAsesor"><i class="fa fa-cog"></i> Vista Asesor </a></li>
                     }
-                <li class="nav-item @(Context.Request.Path == "/Index" ? "selected" : "")"><a asp-page="/Index"><i class="fa fa-home"></i> Salir de sesión</search></del></a></li>
+                <li class="nav-item @(Context.Request.Path == "/Index" ? "selected" : "")"><a asp-page="/Index"><i class="fa fa-sign-out"></i> Salir de sesión</search></del></a></li>
             </ul>
         </nav>
     </div>
