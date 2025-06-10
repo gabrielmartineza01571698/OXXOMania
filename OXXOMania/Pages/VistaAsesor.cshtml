@@ -8,7 +8,7 @@
     ViewData["Title"] = "VistaAsesor";
     Layout = "_Layout";
 
-    var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
+    var jsonUsr = HttpContextAccessor.HttpContext?.Session.GetString("Usr");
     Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Usuario>(jsonUsr) : null;
 
     string avatarHead = "~/images/objetos/f_1.png"; 
@@ -20,7 +20,7 @@
         {9, "~/images/objetos/f_4.png"}
     };
 
-    string link = $"https://lookerstudio.google.com/embed/reporting/ac0a8ca0-158a-45a9-8a8b-778f0192fe22/page/b3aNF?params=%7B%22asesor_param%22:{usr.id_usuario}%7D";
+    string link = $"https://lookerstudio.google.com/embed/reporting/ac0a8ca0-158a-45a9-8a8b-778f0192fe22/page/b3aNF?params=%7B%22asesor_param%22:{usr?.id_usuario}%7D";
 }
 
 <script>
@@ -28,60 +28,72 @@
     console.log("print: ", lookerLink);
 </script>
 
-
 <div class="content-wrapper" style="padding-left: 250px; padding-bottom: 100px; padding-top: 50px"> 
-
 
     <div class="puntos-container mx-auto" style="padding: 20px; width: 90%;">
         <iframe width="100%" height="250" 
-                            src="@Html.Raw(link)" 
-                            frameborder="0" style="border:0" 
-                            allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-                        </iframe>           
+                src="@Html.Raw(link)" 
+                frameborder="0" style="border:0" 
+                allowfullscreen 
+                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+        </iframe>           
     </div>
 
+    <!-- Tabla de líderes -->
     <div class="lider-list mx-auto" style="padding: 20px; width: 90%;">
-        <h5 class="lider-title" style="font-size: 30px; font-weight: 800; text-align: center;">Tus Líderes: </h5></br>
-            <table class="table w-100">
-                <thead class="thead-light">
-                    <tr class="table-header">
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Sucursal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @for (int i = 0; i < Model.listaLideres.Count; i++)
+        <h5 class="lider-title" style="font-size: 30px; font-weight: 800; text-align: center;">Tus Líderes: </h5><br />
+        <table class="table w-100">
+            <thead class="thead-light">
+                <tr class="table-header">
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Sucursal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @try
+                {
+                    if (Model.listaLideres != null && Model.listaLideres.Count > 0)
                     {
-                        var usuario = Model.listaLideres[i];
-                            string avatarPath = Url.Content(headOptions[usuario.foto]);
-
+                        foreach (var usuario in Model.listaLideres)
+                        {
+                            string avatarPath = Url.Content(headOptions.ContainsKey(usuario.foto) ? headOptions[usuario.foto] : avatarHead);
                             <tr class="table-text" data-id="@usuario.id_usuario" style="cursor:pointer;">
-                             <td>
-                                <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
-                             </td>
+                                <td><img src="@avatarPath" height="70px" style="margin-top: 30px;" /></td>
                                 <td class="align-middle">@usuario.nombre</td>
                                 <td class="align-middle">@usuario.apellido</td>
                                 <td class="align-middle">@usuario.sucursal</td>
                                 <td class="align-middle">
                                     <form method="post" asp-page-handler="VerDetalle">
                                         <input type="hidden" name="id_usuario" value="@usuario.id_usuario" />
-                                            <button type="submit" class="btn btn-primary lider-button" value="@usuario.id_usuario" style="color: rgb(0, 0, 0); background-color: rgb(247, 214, 108); border-color: rgb(247, 214, 108);">
+                                        <button type="submit" class="btn btn-primary lider-button" style="color: rgb(0, 0, 0); background-color: rgb(247, 214, 108); border-color: rgb(247, 214, 108);">
                                             Filtrar Empleados
-                                            </button>
+                                        </button>
                                     </form>
                                 </td>
-                                </tr>
+                            </tr>
+                        }
                     }
-                </tbody>
-            </table>
-        </div>
+                    else
+                    {
+                        <tr><td colspan="5" class="text-center">No hay líderes disponibles</td></tr>
+                    }
+                }
+                catch (Exception ex)
+                {
+                    <tr>
+                        <td colspan="5" class="text-danger text-center">No hay líderes disponibles @ex.Message</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
+    <!-- Tabla de empleados -->
     <div class="horarios-container mx-auto" style="padding: 20px; width: 90%;">
-        <h5 class="horarios-title" style="font-size: 30px; font-weight: 800; text-align: center;">Horarios de Empleados: </h5></br>
+        <h5 class="horarios-title" style="font-size: 30px; font-weight: 800; text-align: center;">Horarios de Empleados: </h5><br />
         <table class="table w-100">
             <thead>
                 <tr>
@@ -93,29 +105,36 @@
                     <th scope="col">Días</th>
                 </tr>
             </thead>
-                <tbody>
-                    @if (Model.listaEmpleados != null && Model.listaEmpleados.Count > 0)
+            <tbody>
+                @try
+                {
+                    if (Model.listaEmpleados != null && Model.listaEmpleados.Count > 0)
                     {
-                        @for (int i = 0; i < Model.listaEmpleados.Count; i++)
-                        {
-                          var empleado = Model.listaEmpleados[i];
-                          <tr>
-                            <td class="align-middle">@empleado.nombre_lider</td>
-                            <td class="align-middle">@empleado.nombre_empleado</td>
-                            <td class="align-middle">@empleado.apellido_empleado</td>
-                            <td class="align-middle">@empleado.horario_entrada</td>
-                            <td class="align-middle">@empleado.horario_salida</td>
-                            <td class="align-middle">@empleado.dias_trabajo</td>
-                         </tr>
-                        }
-                    }
-                        else
+                        foreach (var empleado in Model.listaEmpleados)
                         {
                             <tr>
-                                <td colspan="6" class="text-center">No hay empleados para mostrar</td>
+                                <td class="align-middle">@empleado.nombre_lider</td>
+                                <td class="align-middle">@empleado.nombre_empleado</td>
+                                <td class="align-middle">@empleado.apellido_empleado</td>
+                                <td class="align-middle">@empleado.horario_entrada</td>
+                                <td class="align-middle">@empleado.horario_salida</td>
+                                <td class="align-middle">@empleado.dias_trabajo</td>
                             </tr>
                         }
-                </tbody>
+                    }
+                    else
+                    {
+                        <tr><td colspan="6" class="text-center">No hay empleados para mostrar</td></tr>
+                    }
+                }
+                catch (Exception ex)
+                {
+                    <tr>
+                        <td colspan="6" class="text-danger text-center">No hay empleados para mostrar @ex.Message</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
+
 </div>
