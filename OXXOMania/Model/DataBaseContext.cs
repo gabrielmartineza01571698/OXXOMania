@@ -155,6 +155,19 @@ namespace OXXOMania.Model
             return listaUsuarios;
         }
 
+        public void actualizarPuntajes()
+        {
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                using (MySqlCommand cmd = new MySqlCommand("CALL actualizarScore;", conexion))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
     	// Vista Asesor (Mariangel)
         public List<Empleado> AgarrarHorarios(int id_lider)
         {
