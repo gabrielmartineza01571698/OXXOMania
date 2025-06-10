@@ -19,8 +19,9 @@ namespace OXXOMania.Pages
         }
 
         public int? id_asesor { get; set; }
-        public List<LideresAsesor> listaLideres { get; set; } = null;
-        public List<Empleado> listaEmpleados { get; set; } = null;
+        public List<LideresAsesor> listaLideres { get; set; } = new();
+        public List<Empleado> listaEmpleados { get; set; } = new();
+
 
         public void OnGet()
         {
