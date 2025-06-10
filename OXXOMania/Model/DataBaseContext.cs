@@ -18,11 +18,16 @@ namespace OXXOMania.Model
             return new MySqlConnection(ConnectionString);
         }
 
+
+        // Karla
+
         public Usuario GetUsuarioLogin(string usr)
         {
             Usuario myUsuario = new Usuario();
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
+
+
             MySqlCommand cmd = new MySqlCommand("call GetUsuarioExistente(@usr)", conexion);
             cmd.Parameters.AddWithValue("@usr", usr);
 
@@ -49,11 +54,12 @@ namespace OXXOMania.Model
             conexion.Close();
             return myUsuario;
         }
+
         public void AgregarUsuario(string nombre, string apellido, string user, string sucursal, string password)
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("call CrearUsuario(@nombre, @apellido, @user, @sucursal, @password)", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("call CrearUsuario(@nombre, @apellido, @user, @sucursal, @password)", conexion);
             cmd.Parameters.AddWithValue("@nombre", nombre);
             cmd.Parameters.AddWithValue("@apellido", apellido);
             cmd.Parameters.AddWithValue("@user", user);
@@ -65,11 +71,12 @@ namespace OXXOMania.Model
             conexion.Close();
         }
 
-        public int AgarrarCabeza(int id_usuario) //solo recibe un usuario
+        // Podium (Kevin)
+        public int AgarrarCabeza(int id_usuario)
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
             conexion.Open();
-            MySqlCommand cmd = new MySqlCommand("call agarrarCabeza(@id);", conexion); // "" query con parametro
+            MySqlCommand cmd = new MySqlCommand("call agarrarCabeza(@id);", conexion);
             cmd.Parameters.AddWithValue("@id", id_usuario);
             int cabeza = 0;
             using (var reader = cmd.ExecuteReader())
@@ -183,7 +190,7 @@ namespace OXXOMania.Model
 
             return listaEmpleados;
         }
-            
+
         public List<LideresAsesor> AgarrarLideresdeAsesor(int id_asesor)
         {
             List<LideresAsesor> listaLideres = new List<LideresAsesor>();
@@ -216,5 +223,89 @@ namespace OXXOMania.Model
 
             return listaLideres;
         }
+
+        public List<Reconocimientos> GetReconocimientos(int id_destinatario)
+        {
+            List<Reconocimientos> listaReconocimientos = new List<Reconocimientos>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+
+                MySqlCommand cmd = new MySqlCommand("call getReconocimientos(@id_destinatario);", conexion);
+                cmd.Parameters.AddWithValue("@id_destinatario", id_destinatario);
+
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Reconocimientos r = new Reconocimientos
+                        {
+                            id_reconocimiento = Convert.ToInt32(reader["id_reconocimiento"]),
+                            id_destinatario = Convert.ToInt32(reader["id_destinatario"]),
+                            id_remitiente = Convert.ToInt32(reader["id_remitiente"]),
+                            nombre_remitiente = reader["nombre"].ToString(),
+                            apellido_remitiente = reader["apellido"].ToString(),
+                            tipo = reader["tipo"].ToString(),
+                            descripcion = reader["descripcion"].ToString(),
+                            fecha = reader["fecha"].ToString()
+                        };
+
+                        listaReconocimientos.Add(r);
+                    }
+                }
+            }
+
+            return listaReconocimientos;
+        }
+
+        public List<Usuario> GetDestinatarios(int id_remitiente)
+        {
+            List<Usuario> listaDestinatarios = new List<Usuario>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+
+                MySqlCommand cmd = new MySqlCommand("call getDestinatarios(@id_remitiente);", conexion);
+                cmd.Parameters.AddWithValue("@id_remitiente", id_remitiente);
+
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Usuario u = new Usuario
+                        {
+                            id_usuario = Convert.ToInt32(reader["id_usuario"]),
+                            nombre = reader["nombre"].ToString(),
+                            apellido = reader["apellido"].ToString(),
+                            usuario = reader["usuario"].ToString()
+                        };
+
+                        listaDestinatarios.Add(u);
+                    }
+                }
+            }
+
+            return listaDestinatarios;
+        }
+        
+        public void agregarReconocimiento(int id_destinatario, int id_remitiente, string tipo, string descripcion)
+        {
+            MySqlConnection conexion = new MySqlConnection(ConnectionString);
+            conexion.Open();
+            MySqlCommand cmd = new MySqlCommand("call crearReconocimiento(@id_destinatario, @id_remitiente, @tipo, @descripcion)", conexion);
+            cmd.Parameters.AddWithValue("@id_destinatario", id_destinatario);
+            cmd.Parameters.AddWithValue("@id_remitiente", id_remitiente);
+            cmd.Parameters.AddWithValue("@tipo", tipo);
+            cmd.Parameters.AddWithValue("@descripcion", descripcion);
+
+            cmd.ExecuteNonQuery();
+
+            conexion.Close();
+        }
+
     }
 }

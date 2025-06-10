@@ -14,8 +14,6 @@ public class Index_CrearCuentaModel : PageModel
     [BindProperty]
     [Required(ErrorMessage = "El apellido es obligatorio")]
     public string? apellido { get; set; }
-    //[BindProperty]
-    //public string? correo { get; set; }
     [BindProperty]
     [Required(ErrorMessage = "El usuario es obligatorio")]
     public string? user { get; set; }
@@ -57,7 +55,6 @@ public class Index_CrearCuentaModel : PageModel
         {
             _context.AgregarUsuario(nombre, apellido, user, sucursal, password);
             return RedirectToPage("/Index");
-            //agregar mensaje de su usuario se ha creado con exito porfavor ingrese sesion
         }
 
 
