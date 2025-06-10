@@ -1,0 +1,204 @@
+@page
+@model OXXOMania.Pages.TiendaModel
+@{
+    ViewData["Title"] = "Tienda OXXO - Estilo Ampliado";
+}
+
+<body class="bg-light">
+    <div class="d-flex flex-column justify-content-start" style="height: 100vh;">
+
+        <!-- Encabezado centrado -->
+        <div class="mb-4 text-center" style="padding-top: 80px; padding-left: 200px;">
+            <h1 class="fw-bold display-4 mb-2">¡Bienvenido a la Tienda!</h1>
+
+            <!-- Toggle tipo switch -->
+            <p class="mt-4 mb-2 fs-3">Selecciona qué tipo de objeto deseas comprar</p>
+            <div class="d-flex justify-content-center">
+                <div class="custom-toggle-pill bg-light p-1 rounded-pill shadow-sm">
+                    <button id="btnRopa" type="button" class="btn toggle-option active rounded-pill px-4">Ropa para tu avatar</button>
+                    <button id="btnPremios" type="button" class="btn toggle-option rounded-pill px-4">Premios SpinPremia</button>
+                </div>
+            </div>
+
+            <!-- Monedas -->
+            <span class="fs-3 text-dark d-block mt-4">
+                <img src="@Url.Content("~/images/MonedaOxxo.png")" alt="SpinCoin" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+                Puntos Spin: @Model.MonedasUsuario
+            </span>
+        </div>
+
+        <!-- Contenedor general -->
+        <div class="d-flex align-items-center justify-content-center border rounded-4 p-5 bg-white shadow-lg border-warning border-5"
+            style="width: 1400px; min-height: 500px; margin-top: 20px; margin-left: 520px;">
+            <div class="d-flex justify-content-center w-100">
+
+                <!-- Flecha izquierda -->
+                <div class="d-flex align-items-center">
+                    <button id="prevBtn" class="btn btn-warning rounded-3 fs-4 px-3 py-2 me-3">←</button>
+                </div>
+
+                <!-- Carrusel -->
+                <div class="overflow-hidden d-flex align-items-center" style="width: calc(16rem * 4 + 3rem);">
+                    <div id="cardSliderRopa" class="d-flex transition" style="gap: 1rem;">
+                        @foreach (var objeto in Model.ObjetosTienda)
+                        {
+                            <div class="card border-warning border-4 text-center flex-shrink-0 d-flex flex-column" style="width: 16rem;">
+                                <img src="@Url.Content("~/images/objetos/" + objeto.Imagen)" class="card-img-top p-2" style="height: 150px; object-fit: contain;" alt="@objeto.Nombre">
+                                <div class="card-body py-2">
+                                    <h6 class="card-title mb-1">@objeto.Nombre</h6>
+                                    <p class="text-muted small mb-1">@objeto.Descripcion</p>
+                                </div>
+                                <div class="card-footer bg-white border-0 mt-auto px-2 pt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold text-dark mb-0 d-flex align-items-center" style="gap: 0.25rem;">
+                                            <img src="@Url.Content("~/images/MonedaOxxo.png")" alt="Moneda" style="height: 30px; vertical-align: middle;">
+                                            @objeto.Precio
+                                        </span>
+                                        @if (Model.IdsObjetosComprados.Contains(objeto.IdObjeto))
+                                        {
+                                            <button class="btn btn-secondary btn-sm px-3" disabled>✔ Comprado</button>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" class="m-0">
+                                                <input type="hidden" name="idObjeto" value="@objeto.IdObjeto" />
+                                                <input type="hidden" name="precio" value="@objeto.Precio" />
+                                                <button type="submit" asp-page-handler="Canjear" class="btn btn-warning btn-sm px-3">Canjear</button>
+                                            </form>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div id="cardSliderPremios" class="d-flex transition d-none" style="gap: 1rem;">
+                        @foreach (var premio in Model.PremiosTienda)
+                        {
+                            <div class="card border-warning border-4 text-center flex-shrink-0 d-flex flex-column" style="width: 16rem;">
+                                <img src="@Url.Content("~/images/objetos/" + premio.imagen)" class="card-img-top p-2" style="height: 150px; object-fit: contain;" alt="@premio.nombre">
+                                <div class="card-body py-2">
+                                    <h6 class="card-title mb-1">@premio.nombre</h6>
+                                    <p class="text-muted small mb-1">@premio.descripcion</p>
+                                </div>
+                                <div class="card-footer bg-white border-0 mt-auto px-2 pt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold text-dark mb-0 d-flex align-items-center" style="gap: 0.25rem;">
+                                            <img src="@Url.Content("~/images/MonedaOxxo.png")" alt="Moneda" style="height: 30px; vertical-align: middle;">
+                                            @premio.precio
+                                        </span>
+                                        @if (Model.IdsPremiosCanjeados.Contains(premio.id_objeto))
+                                        {
+                                            <button class="btn btn-secondary btn-sm px-3" disabled>✔ Canjeado</button>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" class="m-0">
+                                                <input type="hidden" name="idPremio" value="@premio.id_objeto" />
+                                                <input type="hidden" name="precio" value="@premio.precio" />
+                                                <button type="submit" asp-page-handler="CanjearPremio" class="btn btn-warning btn-sm px-3">Canjear</button>
+                                            </form>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Flecha derecha -->
+                <div class="d-flex align-items-center">
+                    <button id="nextBtn" class="btn btn-warning rounded-3 fs-4 px-3 py-2 ms-3">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .transition {
+            transition: transform 0.5s ease;
+        }
+
+        .toggle-option {
+            border: none;
+            background-color: transparent;
+            color: #343a40;
+            font-weight: 500;
+        }
+
+        .toggle-option.active {
+            background-color: #A4312D;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .custom-toggle-pill {
+            display: inline-flex;
+            gap: 0;
+        }
+    </style>
+
+    <script>
+        let currentIndex = 0;
+        const cardWidth = 272;
+        const visibleCards = 4;
+
+        const btnRopa = document.getElementById('btnRopa');
+        const btnPremios = document.getElementById('btnPremios');
+        const cardSliderRopa = document.getElementById('cardSliderRopa');
+        const cardSliderPremios = document.getElementById('cardSliderPremios');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let currentSlider = cardSliderRopa;
+
+        function updateSlider() {
+    const totalCards = currentSlider.children.length;
+    const maxIndex = Math.max(Math.ceil(totalCards / visibleCards) - 1, 0);
+    currentIndex = Math.min(currentIndex, maxIndex);
+    const offset = -(currentIndex * (cardWidth * visibleCards));
+    currentSlider.style.transform = `translateX(${offset}px)`; 
+}
+
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const totalCards = currentSlider.children.length;
+            const maxIndex = Math.ceil(totalCards / visibleCards) - 1;
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        btnRopa.addEventListener('click', () => {
+            btnRopa.classList.add('active');
+            btnPremios.classList.remove('active');
+            cardSliderRopa.classList.remove('d-none');
+            cardSliderPremios.classList.add('d-none');
+            currentSlider = cardSliderRopa;
+            currentIndex = 0;
+            updateSlider();
+        });
+
+        btnPremios.addEventListener('click', () => {
+            btnPremios.classList.add('active');
+            btnRopa.classList.remove('active');
+            cardSliderPremios.classList.remove('d-none');
+            cardSliderRopa.classList.add('d-none');
+            currentSlider = cardSliderPremios;
+            currentIndex = 0;
+            updateSlider();
+        });
+
+        updateSlider();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>

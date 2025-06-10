@@ -12,15 +12,20 @@ namespace OXXOMania.Pages
     public class ReconocimientosModel : PageModel
     {
         [BindProperty]
-        //[Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "Selecciona a una persona")]
         public int id_destinatario { get; set; }
 
         [BindProperty]
-        //[Required(ErrorMessage = "El usuario es obligatorio")]
+        [Required(ErrorMessage = "Selecciona a un reconocimiento")]
         public string? tipo { get; set; }
+
         [BindProperty]
-        //[Required(ErrorMessage = "La sucursal es obligatoria")]
+        [Required(ErrorMessage = "Agrega una descripción")]
         public string? descripcion { get; set; }
+
+        [TempData]
+        public bool ReconocimientoEnviado { get; set; } = false;
+
         private readonly IHttpContextAccessor lectorSesion;
         private readonly DataBaseContext db;
 
@@ -56,7 +61,13 @@ namespace OXXOMania.Pages
             {
                 UsuarioActual = JsonSerializer.Deserialize<Usuario>(jsonUsr);
 
-                db.agregarReconocimiento(id_destinatario, UsuarioActual.id_usuario, tipo, descripcion);
+                if (ModelState.IsValid)
+                {
+                    db.agregarReconocimiento(id_destinatario, UsuarioActual.id_usuario, tipo, descripcion);
+                    ReconocimientoEnviado = true;
+                    ModelState.Clear();
+                }
+
                 ListaReconocimientos = db.GetReconocimientos(UsuarioActual.id_usuario);
                 ListaDestinatarios = db.GetDestinatarios(UsuarioActual.id_usuario);
             }
