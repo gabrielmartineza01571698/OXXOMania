@@ -40,7 +40,7 @@ namespace OXXOMania.Pages
         }
 
 
-        public void OnGet()
+        public void OnGet(bool enviado = false)
         {
             var jsonUsr = lectorSesion.HttpContext?.Session.GetString("Usr");
 
@@ -50,11 +50,12 @@ namespace OXXOMania.Pages
 
                 ListaReconocimientos = db.GetReconocimientos(UsuarioActual.id_usuario);
                 ListaDestinatarios = db.GetDestinatarios(UsuarioActual.id_usuario);
-            }
 
+                ReconocimientoEnviado = enviado; 
+            }
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             var jsonUsr = lectorSesion.HttpContext?.Session.GetString("Usr");
             if (!string.IsNullOrEmpty(jsonUsr))
@@ -64,13 +65,14 @@ namespace OXXOMania.Pages
                 if (ModelState.IsValid)
                 {
                     db.agregarReconocimiento(id_destinatario, UsuarioActual.id_usuario, tipo, descripcion);
-                    ReconocimientoEnviado = true;
-                    ModelState.Clear();
+                    return RedirectToPage("Reconocimientos", new { enviado = true });
                 }
 
                 ListaReconocimientos = db.GetReconocimientos(UsuarioActual.id_usuario);
                 ListaDestinatarios = db.GetDestinatarios(UsuarioActual.id_usuario);
             }
+
+            return Page();
         }
 
     }
