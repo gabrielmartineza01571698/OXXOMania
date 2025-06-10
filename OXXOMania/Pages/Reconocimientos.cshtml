@@ -19,6 +19,7 @@
         {8, "~/images/objetos/f_3.png"},
         {9, "~/images/objetos/f_4.png"}
     };
+    
 }
 
 <div style="padding-top: 80px; padding-left: 250px; padding-bottom: 50px;">
@@ -43,7 +44,9 @@
                                     @destinatario.usuario - @destinatario.nombre @destinatario.apellido
                                 </option>
                             }
-                        </select>    
+                        </select>
+                        <span asp-validation-for="id_destinatario" class="text-danger small"></span>
+    
                     </div>
                     
                     <div class="mb-3 text-center">
@@ -67,14 +70,20 @@
                             <img src="~/images/r_logo/responsabilidad.png" alt="Responsabilidad" width="100" class="img-thumbnail reconocimiento-img" />
                             <div class="text-center">Responsabilidad</div>
                         </label>
+                        <br/>
+                        <span asp-validation-for="tipo" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
                         <label for="descripcion" class="form-label">Descripción</label>
                         <textarea class="form-control" id="descripcion" rows="3" asp-for="descripcion"></textarea>
+                        <span asp-validation-for="descripcion" class="text-danger small"></span>
+
                     </div>
 
                     <input type="submit" class="btn btn-login w-100 fs-6 mt-4 mb-4" value="Enviar reconocimiento"/>
+    
+
                 </form>
             </div>
 
@@ -121,3 +130,15 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    @if (Model.ReconocimientoEnviado)
+    {
+        <script>
+            alert("¡Tu reconocimiento se ha enviado con éxito!");
+        </script>
+    }
+
+}
