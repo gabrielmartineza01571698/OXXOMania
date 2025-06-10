@@ -292,7 +292,7 @@ namespace OXXOMania.Model
 
             return listaDestinatarios;
         }
-        
+
         public void agregarReconocimiento(int id_destinatario, int id_remitiente, string tipo, string descripcion)
         {
             MySqlConnection conexion = new MySqlConnection(ConnectionString);
@@ -307,6 +307,169 @@ namespace OXXOMania.Model
 
             conexion.Close();
         }
+
+
+         //Mario
+        public List<Objeto> ObtenerObjetosTienda()
+        {
+            List<Objeto> objetos = new List<Objeto>();
+
+            using (var conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM objeto;", conexion);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Objeto obj = new Objeto
+                        {
+                            IdObjeto = Convert.ToInt32(reader["id_objeto"]),
+                            Nombre = reader["nombre"].ToString(),
+                            Tipo = reader["tipo"].ToString(),
+                            Precio = Convert.ToInt32(reader["precio"]),
+                            Descripcion = reader["descripcion"].ToString(),
+                            Imagen = reader["imagen"].ToString()
+                        };
+                        objetos.Add(obj);
+                    }
+                }
+            }
+
+            return objetos;
+        }
+
+        public int ObtenerMonedasPorUsuario(string usuario)
+        {
+            using var conexion = new MySqlConnection(ConnectionString);
+            conexion.Open();
+
+            MySqlCommand cmd = new MySqlCommand("SELECT monedas FROM usuario WHERE usuario = @usuario", conexion);
+            cmd.Parameters.AddWithValue("@usuario", usuario);
+
+            object result = cmd.ExecuteScalar();
+            if (result != null && result != DBNull.Value)
+            {
+                return Convert.ToInt32(result);
+            }
+            return 0;
+        }
+
+        public void RegistrarCompraYRestarMonedas(int id_usuario, int id_objeto, int precio)
+        {
+            using (var conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+
+                var insertCmd = new MySqlCommand("INSERT INTO tenencia (id_usuario, id_objeto, comprado, equipado) VALUES (@id_usuario, @id_objeto, 1, 0);", conexion);
+                insertCmd.Parameters.AddWithValue("@id_usuario", id_usuario);
+                insertCmd.Parameters.AddWithValue("@id_objeto", id_objeto);
+                insertCmd.ExecuteNonQuery();
+
+                var updateCmd = new MySqlCommand("UPDATE usuario SET monedas = monedas - @precio WHERE id_usuario = @id_usuario;", conexion);
+                updateCmd.Parameters.AddWithValue("@precio", precio);
+                updateCmd.Parameters.AddWithValue("@id_usuario", id_usuario);
+                updateCmd.ExecuteNonQuery();
+            }
+        }
+        public List<int> ObtenerIdsObjetosComprados(int id_usuario)
+        {
+            List<int> ids = new List<int>();
+            using (var conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT id_objeto FROM tenencia WHERE id_usuario = @id_usuario;", conexion);
+                cmd.Parameters.AddWithValue("@id_usuario", id_usuario);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ids.Add(Convert.ToInt32(reader["id_objeto"]));
+                    }
+                }
+            }
+            return ids;
+        }
+        
+        //PremioSpin
+        public List<PremioSpin> ObtenerPremiosSpin()
+        {
+            List<PremioSpin> premios = new List<PremioSpin>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM PremiosSpin", conexion);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        premios.Add(new PremioSpin
+                        {
+                            id_objeto = Convert.ToInt32(reader["id_objeto"]),
+                            nombre = reader["nombre"].ToString(),
+                            precio = Convert.ToInt32(reader["precio"]),
+                            descripcion = reader["descripcion"].ToString(),
+                            imagen = reader["imagen"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return premios;
+        }
+
+        public List<int> ObtenerIdsPremiosCanjeados(int idUsuario)
+        {
+            List<int> ids = new();
+            using var conexion = GetConnection();
+            conexion.Open();
+
+            string query = "SELECT id_premio FROM premioscanjeados WHERE id_usuario = @idUsuario";
+            using var cmd = new MySqlCommand(query, conexion);
+            cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ids.Add(Convert.ToInt32(reader["id_premio"]));
+            }
+
+            return ids;
+        }
+
+        public void RegistrarCanjePremio(int idUsuario, int idPremio, int costo)
+        {
+            using var conexion = GetConnection();
+            conexion.Open();
+
+            using var transaccion = conexion.BeginTransaction();
+
+            try
+            {
+                string insertar = "INSERT INTO premioscanjeados (id_usuario, id_premio) VALUES (@idUsuario, @idPremio)";
+                using var cmdInsert = new MySqlCommand(insertar, conexion, transaccion);
+                cmdInsert.Parameters.AddWithValue("@idUsuario", idUsuario);
+                cmdInsert.Parameters.AddWithValue("@idPremio", idPremio);
+                cmdInsert.ExecuteNonQuery();
+
+                string actualizar = "UPDATE usuario SET monedas = monedas - @costo WHERE id_usuario = @idUsuario";
+                using var cmdUpdate = new MySqlCommand(actualizar, conexion, transaccion);
+                cmdUpdate.Parameters.AddWithValue("@costo", costo);
+                cmdUpdate.Parameters.AddWithValue("@idUsuario", idUsuario);
+                cmdUpdate.ExecuteNonQuery();
+
+                transaccion.Commit();
+            }
+            catch
+            {
+                transaccion.Rollback();
+                throw;
+            }
+    }
+
 
     }
 }
