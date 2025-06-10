@@ -3,6 +3,7 @@ using OXXOMania.Model;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace OXXOMania.Pages
 {
@@ -21,7 +22,9 @@ namespace OXXOMania.Pages
         }
 
         public List<ObjetoConEstado> ObjetosEquipables { get; set; } = new();
-        public int UsuarioId = 1;
+
+        // ✅ AHORA se setea desde sesión
+        public int UsuarioId { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public bool MostrarTodos { get; set; }
@@ -34,11 +37,25 @@ namespace OXXOMania.Pages
 
         public void OnGet()
         {
+            var usuarioJson = HttpContext.Session.GetString("Usr");
+            if (usuarioJson != null)
+            {
+                var usuario = JsonSerializer.Deserialize<Usuario>(usuarioJson);
+                UsuarioId = usuario.id_usuario;
+            }
+
             CargarObjetos();
         }
 
         public IActionResult OnPost()
         {
+            var usuarioJson = HttpContext.Session.GetString("Usr");
+            if (usuarioJson != null)
+            {
+                var usuario = JsonSerializer.Deserialize<Usuario>(usuarioJson);
+                UsuarioId = usuario.id_usuario;
+            }
+
             using var connection = _context.GetConnection();
             connection.Open();
 
@@ -69,6 +86,8 @@ namespace OXXOMania.Pages
 
         private void CargarObjetos()
         {
+            ObjetosEquipables.Clear();
+
             using var connection = _context.GetConnection();
             connection.Open();
 
