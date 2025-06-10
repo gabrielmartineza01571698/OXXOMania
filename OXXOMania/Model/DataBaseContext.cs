@@ -18,6 +18,34 @@ namespace OXXOMania.Model
             return new MySqlConnection(ConnectionString);
         }
 
+        // Gabriel
+        public List<Instruccion> ObtenerInstrucciones()
+        {
+            List<Instruccion> lista = new List<Instruccion>();
+
+            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            {
+                conexion.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM instrucciones", conexion);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new Instruccion
+                        {
+                            id_ins = Convert.ToInt32(reader["id_ins"]),
+                            tipo = reader["tipo"].ToString(),
+                            img = reader["img"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+
 
         // Karla
 
@@ -126,19 +154,6 @@ namespace OXXOMania.Model
 
             return listaUsuarios;
         }
-
-        public void actualizarPuntajes()
-        {
-            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
-            {
-                conexion.Open();
-                using (MySqlCommand cmd = new MySqlCommand("CALL actualizarScore;", conexion))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
 
     	// Vista Asesor (Mariangel)
         public List<Empleado> AgarrarHorarios(int id_lider)
