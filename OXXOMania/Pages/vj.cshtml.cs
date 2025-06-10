@@ -12,7 +12,7 @@ namespace OXXOMania.Pages
         public void OnGet()
         {
             DataBaseContext db = new DataBaseContext();
-            //Instrucciones = db.ObtenerInstrucciones();
+            Instrucciones = db.ObtenerInstrucciones();
         }
     }
 
