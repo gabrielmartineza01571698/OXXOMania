@@ -34,6 +34,7 @@ namespace OXXOMania.Pages
 
         public void OnGet()
         {
+            db.actualizarPuntajes();
             ListaUsuarios = db.AgarrarLugares();
 
             AvatarPath1 = GetAvatarPath(ListaUsuarios[0].cabeza);

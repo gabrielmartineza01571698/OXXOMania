@@ -1,9 +1,14 @@
 @page
+@using System.Text.Json;
 @model PodiumModel
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Podium";
     Layout = "_Layout";
     
+    var jsonUsr = HttpContextAccessor.HttpContext.Session.GetString("Usr");
+    Model.Usuario usr = !string.IsNullOrEmpty(jsonUsr) ? JsonSerializer.Deserialize<Model.Usuario>(jsonUsr) : null;
 
     string avatarHead = "~/images/objetos/f_1.png"; // Default
     var headOptions = new Dictionary<int, string>()
@@ -92,10 +97,33 @@
 
                             <tr class="table-text">
                                 <td>
-                                    <img src="@avatarPath" height="70px" style="margin-top: 30px;" />
+                                    <div style="height: 60px; overflow: hidden;">
+                                        <img src="@avatarPath" height="100px" style="clip-path: inset(0% 0% 40% 0%);" />
+                                    </div>
                                 </td>
-                                <td class="align-middle">@usuario.nombre</td>
-                                <td class="align-middle">@usuario.apellido</td>
+
+                                
+                                @if (Model.ListaUsuarios[i].id_usuario == usr.id_usuario)
+                                {
+                                    <td>
+                                        <div class="align-middle" style="color: #7c6106; font-weight: bold;">@Model.ListaUsuarios[i].nombre</div>
+                                    </td>
+
+                                    <td>
+                                    <div class="align-middle" style="color: #7c6106; font-weight: bold;">@Model.ListaUsuarios[i].apellido</div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                    <div class="align-middle">@Model.ListaUsuarios[i].nombre</div>
+                                    </td>
+                                    <td>
+                                    <div class="align-middle">@Model.ListaUsuarios[i].apellido</div>
+                                    </td>
+                                }
+                                
+
                                 <td class="score-text">@usuario.score</td>
                                 <td class="align-middle" style="font-weight: bold;">#@(i+1)</td>
                             </tr>
