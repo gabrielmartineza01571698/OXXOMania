@@ -48,8 +48,11 @@
         
         <nav>
             <ul class="nav-list">
+                @if (usr.id_asesor > 0)
+                    {
+                        <li class="nav-item @(Context.Request.Path == "/DashboardLider" ? "selected" : "")"><a asp-page="/DashboardLider"><i class="fa fa-cog"></i> Dashboard </a></li>
+                    }
                 <li class="nav-item @(Context.Request.Path == "/Puntajes" ? "selected" : "")"><a asp-page="/Podium"><i class="fa fa-chart-bar"></i> Podio</a></li>
-                 <li class="nav-item @(Context.Request.Path == "/DashboardLider" ? "selected" : "")"><a asp-page="/DashboardLider"><i class="fa fa-chart-bar"></i> Dashboard</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Perfil" ? "selected" : "")"><a asp-page="/Personalizacion"><i class="fa fa-user"></i> Mi perfil</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Juego" ? "selected" : "")"><a asp-page="/Juego"><i class="fa fa-gamepad"></i> Juego</a></li>
                 <li class="nav-item @(Context.Request.Path == "/Reconocimientos" ? "selected" : "")"><a asp-page="/Reconocimientos"><i class="fa fa-gamepad"></i> Reconocimientos</a></li>
