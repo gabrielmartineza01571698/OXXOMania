@@ -160,7 +160,7 @@ namespace OXXOMania.Model
             using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
             {
                 conexion.Open();
-                using (MySqlCommand cmd = new MySqlCommand("CALL actualizarScore;", conexion))
+                using (MySqlCommand cmd = new MySqlCommand("call actualizarScore;", conexion))
                 {
                     cmd.ExecuteNonQuery();
                 }
